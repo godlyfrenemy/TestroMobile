@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Testro.Views.MainPage"
+             xmlns:vm="clr-namespace:Testro.ViewModels" xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             Title="{Binding Title}"
+             Shell.NavBarIsVisible="False">
+    
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10,0,10,0" VerticalOptions="Center" Spacing="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Entry  Text="{ Binding ActiveTest }"
+                        Placeholder="№ тесту" 
+                        FontSize="Title"
+                        Grid.Column="0"/>
+                <Button VerticalOptions="Center" 
+                        Margin="0,10,0,0"
+                        Text="Сканувати QR код"                        
+                        Command="{Binding ScanQRCodeCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        Grid.Column="1"/>
+            </Grid>
+            <Button VerticalOptions="Center" 
+                    Margin="0,10,0,0" 
+                    Text="Перейти до тесту"                        
+                    Command="{Binding GoToTestCommand}"
+                    IsEnabled="{Binding GoToTestButtonEnabled}"
+                    BackgroundColor="Green"
+                    TextColor="White" />
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
