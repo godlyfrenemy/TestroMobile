@@ -15,11 +15,12 @@ namespace Testro
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+            MainPage = new AppShell();
 
-            if(IsLoggedIn())
-                MainPage = new AppShell(); 
+            if (IsLoggedIn())
+                Shell.Current.GoToAsync($"//{nameof(Views.MainPage)}");
             else
-                MainPage = new LoginPage();
+                Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
         protected override void OnStart()

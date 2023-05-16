@@ -13,6 +13,8 @@ namespace Testro
             InitializeComponent();
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
         }
 
         

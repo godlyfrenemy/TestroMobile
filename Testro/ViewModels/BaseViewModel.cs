@@ -5,14 +5,22 @@ using System.Runtime.CompilerServices;
 using Testro.Models;
 using Testro.Services;
 using Xamarin.Forms;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System.Security.Cryptography;
 using System.Text;
+using System.Data;
 
 namespace Testro.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public void DisplayAlert(string title)
+        {
+            Device.BeginInvokeOnMainThread(() => {
+                Shell.Current.DisplayAlert("Упс", title, "Окей");
+            });
+        }
+
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         bool isBusy = false;
@@ -50,11 +58,22 @@ namespace Testro.ViewModels
             return Convert.ToBase64String(hash);
         }
 
-        static string _connectionProperties = "server=localhost;userid=root;password=;database=u981289406_testro_main";
-        static MySqlConnection _databaseConnection = new MySqlConnection(_connectionProperties);
+        static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+        {
+            Server = "10.0.2.2",
+            Port = 3306,
+            UserID = "root",
+            Password = "",
+            Database = "u981289406_testro_main"
+        };
 
-        static public MySqlConnection DataBaseConnection {
-            get => _databaseConnection;
+       static public MySqlConnection DataBaseConnectionInstance {
+            get
+            {
+                MySqlConnection _databaseConnection = new MySqlConnection(builder.ConnectionString);
+                _databaseConnection.Open();
+                return _databaseConnection;
+            }
         }
 
         #region INotifyPropertyChanged

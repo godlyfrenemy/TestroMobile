@@ -1,54 +1,95 @@
 ﻿using Testro.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using MySql.Data.MySqlClient;
-
+using MySqlConnector;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Testro.ViewModels
 {
     public class LoginPageViewModel : BaseViewModel
     {
         public Command LoginCommand { get; }
+        public Command SignUpCommand { get; }
 
         public LoginPageViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
+            SignUpCommand = new Command(OnSignUpClicked);
         }
 
         private async void OnLoginClicked(object obj)
         {
-            string userId = GetUserId();
-
-            if(userId.Length > 0)
+            if (DoesUserExist())
             {
-                Preferences.Set("USER_ID", userId);
-                Application.Current.MainPage = new AppShell();
-                await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+                string userId = GetUserId();
+
+                if (userId.Length > 0)
+                {
+                    Preferences.Set("USER_ID", userId);
+                    await Shell.Current.GoToAsync($"{nameof(MainPage)}");
+                }
+                else
+                    DisplayAlert("Неправильний пароль, спробуйте знову!");
             }
             else
-                ErrorText = "Такий користувач не існує, спробуйте знову";
+                DisplayAlert("Користувач з таким логіном не існує!");
+        }
+
+        private async void OnSignUpClicked(object obj)
+        {
+            await Shell.Current.GoToAsync($"{nameof(SignUpPage)}");
         }
 
         private string GetUserId()
         {
-            return "1";
-            DataBaseConnection.Open();
-            string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '$login' AND `pupil_password` = 'password'";
-            MySqlCommand command = new MySqlCommand(query, DataBaseConnection);
-            command.Parameters.AddWithValue("@login", UserLogin);
-            command.Parameters.AddWithValue("@password", GetHash(UserPassword));
-            command.Prepare();
-            MySqlDataReader reader = command.ExecuteReader();
             string result = string.Empty;
+            MySqlConnection connection = DataBaseConnectionInstance;
 
-            if (reader.HasRows)
+            try
             {
-                reader.Read();
-                result = reader.GetString("pupil_id");
+                string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + 
+                               "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    result = reader.GetInt64("pupil_id").ToString();
+                }
+
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                DisplayAlert(e.Message);
             }
 
-            reader.Close();
-            DataBaseConnection.Close();
+            connection.Close();
+            return result;
+        }
+
+        private bool DoesUserExist()
+        {
+            bool result = false;
+            MySqlConnection connection = DataBaseConnectionInstance;
+
+            try
+            {
+                string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                result = reader.HasRows;
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                DisplayAlert(e.Message);
+            }
+
+            connection.Close();
             return result;
         }
 
@@ -58,7 +99,7 @@ namespace Testro.ViewModels
             get => _userLogin;
             set
             {
-                SetProperty(ref _userLogin, value);
+                SetProperty(ref _userLogin, value.Trim());
                 LoginButtonEnabled = UserPassword != string.Empty && UserLogin != string.Empty;
             }
         }
@@ -68,7 +109,7 @@ namespace Testro.ViewModels
             get => _userPassword;
             set
             {
-                SetProperty(ref _userPassword, value);
+                SetProperty(ref _userPassword, value.Trim());
                 LoginButtonEnabled = UserPassword != string.Empty && UserLogin != string.Empty;
             }
         }
@@ -78,7 +119,7 @@ namespace Testro.ViewModels
             get => _errorText;
             set
             {
-                SetProperty(ref _errorText, value);
+                SetProperty(ref _errorText, value.Trim());
             } 
         }
 

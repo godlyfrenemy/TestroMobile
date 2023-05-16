@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.33" />
+    <PackageReference Include="MySqlConnector" Version="2.2.6" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />  
@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\SignUpPage.xaml.cs">
+      <DependentUpon>SignUpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -45,9 +45,9 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "dependencies": {
-            "MySql.Data": {
+            "MySqlConnector": {
               "target": "Package",
-              "version": "[8.0.33, )"
+              "version": "[2.2.6, )"
             },
             "NETStandard.Library": {
               "suppressParent": "All",

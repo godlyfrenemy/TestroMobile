@@ -28,21 +28,37 @@
                         HorizontalTextAlignment="Center"/>
             </StackLayout>
             <StackLayout Padding="10,0,10,0" Grid.Row="1">
-                <Label  Text="{Binding ErrorText}"
-                        TextColor="Red"
-                        TextTransform="Uppercase"
-                        HorizontalTextAlignment="Center"/>
                 <Entry  Text="{ Binding UserLogin }"
-                        Placeholder="Введіть ваш логін" 
-                        FontSize="Title"/>
+                        Placeholder="Введіть ваш логін"/>
                 <Entry  Text="{ Binding UserPassword }"
-                        Placeholder="Введіть ваш пароль" 
-                        FontSize="Title"
+                        Placeholder="Введіть ваш пароль"
                         IsPassword="True"/>
-                <Button VerticalOptions="Center" 
+                <Button Margin="0, 30, 0, 0" 
+                        VerticalOptions="Center" 
                         Text="Увійти"
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding LoginButtonEnabled}"/>
+                <Grid Margin="0, 30, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Text="Ви тут вперше?"
+                            FontSize="16"
+                            Grid.Column="0"
+                            HorizontalTextAlignment="End"/>
+                    <Label  TextColor="Blue"
+                            FontSize="16"
+                            Text="Зареєструватися"
+                            TextDecorations="Underline"
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+                            </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                
             </StackLayout>
         </Grid>
     </ContentPage.Content>
