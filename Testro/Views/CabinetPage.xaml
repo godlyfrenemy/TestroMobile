@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Testro.Views.CabinetPage"
+             xmlns:vm="clr-namespace:Testro.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:CabinetViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Вийти"  Command="{Binding SignOutCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10,20,10,20">
+            <StackLayout Margin="10, 10, 10, 10" >
+                <Label  Text="Ім'я учня"
+                    FontSize="Large"/>
+                <Entry  Text="{ Binding UserName.PropertyValue }"
+                    FontSize="Large"
+                    Placeholder="Введіть ім'я"
+                    Unfocused="UserName_Unfocused"
+                    Focused="UserName_Focused"/>
+            </StackLayout>
+            <StackLayout Margin="10, 10, 10, 10" >
+                <Label  Text="Прізвище учня"
+                    FontSize="Large"/>
+                <Entry  Text="{ Binding UserSurname.PropertyValue }"
+                    FontSize="Large"
+                    Placeholder="Введіть прізвище"
+                    Unfocused="UserSurname_Unfocused"
+                    Focused="UserSurname_Focused"/>
+            </StackLayout>
+            <StackLayout Margin="10, 10, 10, 10" >
+                <Label  Text="Клас учня"
+                    FontSize="Large"/>
+                <Entry  Text="{ Binding UserForm.PropertyValue }"
+                    FontSize="Large"
+                    Placeholder="Введіть клас"
+                    Unfocused="UserForm_Unfocused"
+                    Focused="UserForm_Focused"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

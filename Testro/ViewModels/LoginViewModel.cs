@@ -5,6 +5,8 @@ using MySqlConnector;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ZXing;
+using Testro.Models;
 
 namespace Testro.ViewModels
 {
@@ -21,20 +23,24 @@ namespace Testro.ViewModels
 
         private async void OnLoginClicked(object obj)
         {
-            if (DoesUserExist())
+            if (GetDataBaseRequestResult(DoesUserExist) ?? false)
             {
-                string userId = GetUserId();
+                long userId = GetDataBaseRequestResult(GetUserId) ?? -1;
 
-                if (userId.Length > 0)
+                if (userId != -1)
                 {
-                    Preferences.Set("USER_ID", userId);
-                    await Shell.Current.GoToAsync($"{nameof(MainPage)}");
+                    User.UserId = userId;
+                    User.UserDataId = GetDataBaseRequestResult(GetUserDataId) ?? -1;
+                    await Shell.Current.GoToAsync($"//{nameof(Views.MainPage)}", true);
+                    await Task.Delay(2000);
+                    UserLogin = string.Empty;
+                    UserPassword = string.Empty;
                 }
                 else
-                    DisplayAlert("Неправильний пароль, спробуйте знову!");
+                    DisplayErrorAlert("Неправильний пароль, спробуйте знову!");
             }
             else
-                DisplayAlert("Користувач з таким логіном не існує!");
+                DisplayErrorAlert("Користувач з таким логіном не існує!");
         }
 
         private async void OnSignUpClicked(object obj)
@@ -42,54 +48,51 @@ namespace Testro.ViewModels
             await Shell.Current.GoToAsync($"{nameof(SignUpPage)}");
         }
 
-        private string GetUserId()
+        private long? GetUserId(MySqlConnection connection)
         {
-            string result = string.Empty;
-            MySqlConnection connection = DataBaseConnectionInstance;
-
-            try
-            {
-                string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + 
+            string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin +
                                "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
 
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    result = reader.GetInt64("pupil_id").ToString();
-                }
+            long result = -1;
 
-                reader.Close();
-            }
-            catch (Exception e)
+            if (reader.HasRows)
             {
-                DisplayAlert(e.Message);
+                reader.Read();
+                result = reader.GetInt64("pupil_id");
             }
 
-            connection.Close();
+            reader.Close();
             return result;
         }
 
-        private bool DoesUserExist()
+        private long? GetUserDataId(MySqlConnection connection)
         {
-            bool result = false;
-            MySqlConnection connection = DataBaseConnectionInstance;
+            string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin +
+                               "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
 
-            try
+            long result = -1;
+
+            if (reader.HasRows)
             {
-                string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-                result = reader.HasRows;
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                DisplayAlert(e.Message);
+                reader.Read();
+                result = reader.GetInt64("pupil_data_id");
             }
 
-            connection.Close();
+            reader.Close();
+            return result;
+        }
+
+        private bool? DoesUserExist(MySqlConnection connection)
+        {
+            string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            bool result = reader.HasRows;
+            reader.Close();
             return result;
         }
 

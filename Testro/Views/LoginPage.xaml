@@ -29,15 +29,21 @@
             </StackLayout>
             <StackLayout Padding="10,0,10,0" Grid.Row="1">
                 <Entry  Text="{ Binding UserLogin }"
+                        FontSize="Large"
+                        HorizontalTextAlignment="Center"
                         Placeholder="Введіть ваш логін"/>
                 <Entry  Text="{ Binding UserPassword }"
+                        FontSize="Large"
+                        HorizontalTextAlignment="Center"
                         Placeholder="Введіть ваш пароль"
                         IsPassword="True"/>
                 <Button Margin="0, 30, 0, 0" 
                         VerticalOptions="Center" 
                         Text="Увійти"
+                        FontSize="Medium"
                         Command="{Binding LoginCommand}"
-                        IsEnabled="{Binding LoginButtonEnabled}"/>
+                        IsEnabled="{Binding LoginButtonEnabled}"
+                        CornerRadius="20"/>
                 <Grid Margin="0, 30, 0, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

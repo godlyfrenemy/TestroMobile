@@ -1,5 +1,5 @@
 ﻿using System;
-using Testro.Services;
+using Testro.Models;
 using Testro.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -14,11 +14,14 @@ namespace Testro
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
 
             if (IsLoggedIn())
+            {
+                User.UserId = Preferences.Get("USER_ID", User.UNKNOWN_ID);
+                User.UserDataId = Preferences.Get("USER_DATA_ID", User.UNKNOWN_ID);
                 Shell.Current.GoToAsync($"//{nameof(Views.MainPage)}");
+            }
             else
                 Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
@@ -37,7 +40,7 @@ namespace Testro
 
         protected bool IsLoggedIn()
         {
-            return false;
+            return Preferences.Get("USER_ID", User.UNKNOWN_ID) != User.UNKNOWN_ID;
         }
     }
 }

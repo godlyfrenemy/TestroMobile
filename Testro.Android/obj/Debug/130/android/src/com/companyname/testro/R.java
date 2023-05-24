@@ -9866,20 +9866,20 @@ public final class R {
     public static final int btn_radio_off_to_on_mtrl_animation=0x7f07005c;
     public static final int btn_radio_on_mtrl=0x7f07005d;
     public static final int btn_radio_on_to_off_mtrl_animation=0x7f07005e;
-    public static final int design_fab_background=0x7f07005f;
-    public static final int design_ic_visibility=0x7f070060;
-    public static final int design_ic_visibility_off=0x7f070061;
-    public static final int design_password_eye=0x7f070062;
-    public static final int design_snackbar_background=0x7f070063;
-    public static final int ic_arrow_down_24dp=0x7f070064;
-    public static final int ic_clock_black_24dp=0x7f070065;
-    public static final int ic_keyboard_black_24dp=0x7f070066;
-    public static final int ic_mtrl_checked_circle=0x7f070067;
-    public static final int ic_mtrl_chip_checked_black=0x7f070068;
-    public static final int ic_mtrl_chip_checked_circle=0x7f070069;
-    public static final int ic_mtrl_chip_close_circle=0x7f07006a;
-    public static final int icon_about=0x7f07006b;
-    public static final int icon_feed=0x7f07006c;
+    public static final int cabinet_icon=0x7f07005f;
+    public static final int design_fab_background=0x7f070060;
+    public static final int design_ic_visibility=0x7f070061;
+    public static final int design_ic_visibility_off=0x7f070062;
+    public static final int design_password_eye=0x7f070063;
+    public static final int design_snackbar_background=0x7f070064;
+    public static final int ic_arrow_down_24dp=0x7f070065;
+    public static final int ic_clock_black_24dp=0x7f070066;
+    public static final int ic_keyboard_black_24dp=0x7f070067;
+    public static final int ic_mtrl_checked_circle=0x7f070068;
+    public static final int ic_mtrl_chip_checked_black=0x7f070069;
+    public static final int ic_mtrl_chip_checked_circle=0x7f07006a;
+    public static final int ic_mtrl_chip_close_circle=0x7f07006b;
+    public static final int main_page_icon=0x7f07006c;
     public static final int material_cursor_drawable=0x7f07006d;
     public static final int material_ic_calendar_black_24dp=0x7f07006e;
     public static final int material_ic_clear_black_24dp=0x7f07006f;
@@ -9917,7 +9917,6 @@ public final class R {
     public static final int test_custom_background=0x7f07008f;
     public static final int tooltip_frame_dark=0x7f070090;
     public static final int tooltip_frame_light=0x7f070091;
-    public static final int xamarin_logo=0x7f070092;
   }
   public static final class id {
     public static final int ALT=0x7f080000;

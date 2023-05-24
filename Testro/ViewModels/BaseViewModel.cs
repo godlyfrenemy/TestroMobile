@@ -2,26 +2,52 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Testro.Models;
-using Testro.Services;
 using Xamarin.Forms;
 using MySqlConnector;
 using System.Security.Cryptography;
 using System.Text;
-using System.Data;
+using System.Threading.Tasks;
+using Testro.Models;
 
 namespace Testro.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public void DisplayAlert(string title)
+        public void DisplayErrorAlert(string title)
         {
             Device.BeginInvokeOnMainThread(() => {
-                Shell.Current.DisplayAlert("Упс", title, "Окей");
+                Shell.Current.DisplayAlert("Помилка!", title, "Окей");
             });
         }
+        public void DisplaySuccessAlert(string title)
+        {
+            Device.BeginInvokeOnMainThread(() => {
+                Shell.Current.DisplayAlert("Успішно!", title, "Окей");
+            });
+        }
+        public async Task<bool> DisplayConfirmAlert(string title, string message, string accept = "Так", string cancel = "Ні")
+        {
+            return await Shell.Current.DisplayAlert(title, message, accept, cancel);
+        }
 
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public T GetDataBaseRequestResult<T>(Func<MySqlConnection, T> function)
+        {
+            MySqlConnection connection = DataBaseConnectionInstance;
+
+            T result = default;
+
+            try
+            {            
+                result = function.Invoke(connection);
+            }
+            catch (Exception e)
+            {
+                DisplayErrorAlert(e.Message);
+            }
+
+            return result;
+        }
+
 
         bool isBusy = false;
         public bool IsBusy
@@ -58,13 +84,13 @@ namespace Testro.ViewModels
             return Convert.ToBase64String(hash);
         }
 
-        static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+        static readonly MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
         {
             Server = "10.0.2.2",
             Port = 3306,
             UserID = "root",
             Password = "",
-            Database = "u981289406_testro_main"
+            Database = "testro_db"
         };
 
        static public MySqlConnection DataBaseConnectionInstance {

@@ -5,8 +5,6 @@ C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Testr
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Testro.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\AppShell.xaml.g.cs
-C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\ItemDetailPage.xaml.g.cs
-C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\ItemsPage.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\LoginPage.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Testro.AssemblyInfoInputs.cache
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Testro.AssemblyInfo.cs
@@ -19,3 +17,4 @@ C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\ref\T
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\MainPage.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\QRCodeScannerPage.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\SignUpPage.xaml.g.cs
+C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\CabinetPage.xaml.g.cs

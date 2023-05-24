@@ -5,6 +5,7 @@ using MySqlConnector;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ZXing;
 
 namespace Testro.ViewModels
 {
@@ -19,9 +20,9 @@ namespace Testro.ViewModels
 
         private async void OnSignUpClicked(object obj)
         {
-            if (!DoesUserExist())
+            if (GetDataBaseRequestResult(CheckIfUserExists) ?? false)
             {
-                long newUserId = AddNewUser();
+                long newUserId = GetDataBaseRequestResult(AddNewUser) ?? -1;
 
                 if (newUserId != -1)
                 {
@@ -29,53 +30,28 @@ namespace Testro.ViewModels
                     await Shell.Current.GoToAsync($"{nameof(MainPage)}");
                 }
                 else
-                    DisplayAlert("Не вдалося додати користувача, спробуйте пізніше");
+                    DisplayErrorAlert("Не вдалося додати користувача, спробуйте пізніше");
             }
             else
-                DisplayAlert("Такий користувач вже існує!");
+                DisplayErrorAlert("Такий користувач вже існує!");
         }
 
-        private bool DoesUserExist()
+        private bool? CheckIfUserExists(MySqlConnection connection)
         {
-            bool result = false;
-            MySqlConnection connection = DataBaseConnectionInstance;
-
-            try
-            {
-                string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-                result = reader.HasRows;
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                DisplayAlert(e.Message);
-            }
-
-            connection.Close();
+            string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            bool result = reader.HasRows;
+            reader.Close();
             return result;
         }
 
-        private long AddNewUser()
+        private long? AddNewUser(MySqlConnection connection)
         {
-            long result = -1;
-            MySqlConnection connection = DataBaseConnectionInstance;
-
-            try
-            {
-                string query = "INSERT INTO pupil_users(`pupil_login`, `pupil_password`) VALUES('" + UserLogin + "', '" + GetHash(UserPassword) + "')";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.ExecuteNonQuery();
-                result = command.LastInsertedId;
-            }
-            catch (Exception e)
-            {
-                DisplayAlert(e.Message);
-            }
-
-            connection.Close();
-            return result;
+            string query = "INSERT INTO pupil_users(`pupil_login`, `pupil_password`) VALUES('" + UserLogin + "', '" + GetHash(UserPassword) + "')";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.ExecuteNonQuery();
+            return command.LastInsertedId;
         }
 
         private int _enteredFieldsCount = 0;

@@ -41,7 +41,8 @@
                         VerticalOptions="Center" 
                         Text="Зареєструватися"
                         Command="{Binding SignUpCommand}"
-                        IsEnabled="{Binding SignUpButtonEnabled}"/>
+                        IsEnabled="{Binding SignUpButtonEnabled}"
+                        CornerRadius="20"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>
