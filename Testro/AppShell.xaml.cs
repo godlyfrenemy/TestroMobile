@@ -15,6 +15,7 @@ namespace Testro
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
             Routing.RegisterRoute(nameof(CabinetPage), typeof(CabinetPage));
+            Routing.RegisterRoute(nameof(TestPage), typeof(TestPage));
         }
 
     }

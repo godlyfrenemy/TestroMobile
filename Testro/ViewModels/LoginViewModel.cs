@@ -52,48 +52,20 @@ namespace Testro.ViewModels
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin +
                                "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
-
-            long result = -1;
-
-            if (reader.HasRows)
-            {
-                reader.Read();
-                result = reader.GetInt64("pupil_id");
-            }
-
-            reader.Close();
-            return result;
+            return GetFirstValueAndClose<long>(query, connection, "pupil_id");
         }
 
         private long? GetUserDataId(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin +
                                "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
-
-            long result = -1;
-
-            if (reader.HasRows)
-            {
-                reader.Read();
-                result = reader.GetInt64("pupil_data_id");
-            }
-
-            reader.Close();
-            return result;
+            return GetFirstValueAndClose<long>(query, connection, "pupil_data_id");
         }
 
         private bool? DoesUserExist(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
-            bool result = reader.HasRows;
-            reader.Close();
-            return result;
+            return GetHasRowsAndClose(query, connection);
         }
 
         private string _userLogin = string.Empty;

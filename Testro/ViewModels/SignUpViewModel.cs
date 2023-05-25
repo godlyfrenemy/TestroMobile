@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ZXing;
+using Testro.Models;
 
 namespace Testro.ViewModels
 {
@@ -20,14 +21,14 @@ namespace Testro.ViewModels
 
         private async void OnSignUpClicked(object obj)
         {
-            if (GetDataBaseRequestResult(CheckIfUserExists) ?? false)
+            if (!(GetDataBaseRequestResult(CheckIfUserExists) ?? true))
             {
                 long newUserId = GetDataBaseRequestResult(AddNewUser) ?? -1;
 
                 if (newUserId != -1)
                 {
-                    Preferences.Set("USER_ID", newUserId.ToString());
-                    await Shell.Current.GoToAsync($"{nameof(MainPage)}");
+                    Preferences.Set("USER_ID", newUserId);
+                    await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
                 }
                 else
                     DisplayErrorAlert("Не вдалося додати користувача, спробуйте пізніше");
@@ -39,17 +40,17 @@ namespace Testro.ViewModels
         private bool? CheckIfUserExists(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
-            bool result = reader.HasRows;
-            reader.Close();
-            return result;
+            return GetHasRowsAndClose(query, connection);
         }
 
         private long? AddNewUser(MySqlConnection connection)
         {
-            string query = "INSERT INTO pupil_users(`pupil_login`, `pupil_password`) VALUES('" + UserLogin + "', '" + GetHash(UserPassword) + "')";
+            string query = "INSERT INTO pupils_data(`pupil_name`, `pupil_surname`) VALUES('" + UserName + "', '" + UserSurname + "')";
             MySqlCommand command = new MySqlCommand(query, connection);
+            command.ExecuteNonQuery();
+            User.UserDataId = command.LastInsertedId;
+            query = "INSERT INTO pupil_users(`pupil_login`, `pupil_password`, `pupil_data_id`) VALUES('" + UserLogin + "', '" + GetHash(UserPassword) + "', '" + User.UserDataId + "')";
+            command = new MySqlCommand(query, connection);
             command.ExecuteNonQuery();
             return command.LastInsertedId;
         }

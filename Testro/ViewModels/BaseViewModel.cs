@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Testro.Models;
+using System.Runtime.ConstrainedExecution;
+using ZXing;
 
 namespace Testro.ViewModels
 {
@@ -35,17 +37,73 @@ namespace Testro.ViewModels
             MySqlConnection connection = DataBaseConnectionInstance;
 
             T result = default;
-
-            try
-            {            
-                result = function.Invoke(connection);
-            }
+            try 
+            { 
+                result = function.Invoke(connection); 
+            } 
             catch (Exception e)
-            {
+            { 
                 DisplayErrorAlert(e.Message);
             }
 
             return result;
+        }
+
+        public static bool ChangedRows(string query, MySqlConnection connection)
+        {
+            MySqlDataReader reader = new MySqlCommand(query, connection).ExecuteReader();
+            bool result = reader.RecordsAffected > 0;
+            reader.Close();
+            return result;
+        }
+
+        public static bool GetHasRowsAndClose(string query, MySqlConnection connection)
+        {
+            MySqlDataReader reader = new MySqlCommand(query, connection).ExecuteReader();
+            bool result = reader.HasRows;
+            reader.Close();
+            return result;
+        }
+
+        public static T GetFirstValueAndClose<T>(string query, MySqlConnection connection, string fieldName)
+        {
+            MySqlDataReader reader = new MySqlCommand(query, connection).ExecuteReader();
+            object result = default;
+
+            Dictionary<Type, Action> typeSwitch = new Dictionary<Type, Action>
+            {
+                { typeof(int), () => result = reader.GetInt32(fieldName) },
+                { typeof(long), () => result = reader.GetInt64(fieldName) },
+                { typeof(string), () => result = reader.GetString(fieldName) }
+            };
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                typeSwitch[typeof(T)].Invoke();
+            }
+
+            reader.Close();
+            return (T)result;
+        }
+
+        public static List<T> GetAllValues<T>(string query, MySqlConnection connection, string fieldName)
+        {
+            MySqlDataReader reader = new MySqlCommand(query, connection).ExecuteReader();
+            List<object> values = new List<object>();
+
+            Dictionary<Type, Action> typeSwitch = new Dictionary<Type, Action>
+            {
+                { typeof(int), () => values.Add(reader.GetInt32(fieldName)) },
+                { typeof(long), () => values.Add(reader.GetInt64(fieldName)) },
+                { typeof(string), () => values.Add(reader.GetString(fieldName)) }
+            };
+
+            while (reader.Read())
+                typeSwitch[typeof(T)].Invoke();
+
+            reader.Close();
+            return values.ConvertAll(value => (T)value);
         }
 
 

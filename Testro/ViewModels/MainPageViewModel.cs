@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlConnector;
+using System;
 using System.Net.NetworkInformation;
 using System.Windows.Input;
 using Testro.Views;
@@ -22,7 +23,16 @@ namespace Testro.ViewModels
         }
         protected async void OnGoToTestClicked()
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new QRCodeScannerPage(this));
+            if (GetDataBaseRequestResult(CheckIfTestExists) ?? false)
+                await Application.Current.MainPage.Navigation.PushModalAsync(new TestPage(long.Parse(ActiveTest)));
+            else
+                DisplayErrorAlert("Такий тест не існує!");
+        }
+
+        private bool? CheckIfTestExists(MySqlConnection connection)
+        {
+            string query = "SELECT * FROM `tests` WHERE `test_id` = '" + ActiveTest + "'";
+            return GetHasRowsAndClose(query, connection);
         }
 
         public Command ScanQRCodeCommand { get; set; }
