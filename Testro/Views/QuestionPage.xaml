@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Testro.Views.QuestionPage"
+             Title="{Binding Title}">
+
+    <ContentPage.Content>
+        <Grid Margin="20, 20, 20, 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="{Binding Question.QuestionName }"
+                   FontSize="Large"
+                   HorizontalOptions="CenterAndExpand"
+                   Grid.Row="0"
+                   VerticalOptions="Start"/>
+
+            <Label Text="Варіанти відповіді"
+                   FontSize="Large"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Start"
+                   Grid.Row="1"/>
+
+            <ListView x:Name="MyListView"
+                      ItemsSource="{ Binding Answers }"
+                      CachingStrategy="RecycleElement"
+                      Margin="0, 40, 0, 0"
+                      Grid.Row="1"
+                      VerticalOptions="CenterAndExpand">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Tapped="Handle_ItemTapped">
+                            <StackLayout>
+                                <Label Text="{ Binding AnswerText }" FontSize="Large" Padding="10, 10, 10, 10"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <Button Text="{Binding ContinueButtonText}"
+                    CornerRadius="20"
+                    Command="{Binding ContinueTestingCommand}"
+                    VerticalOptions="EndAndExpand"
+                    Grid.Row="2"/>
+        </Grid>
+        
+    </ContentPage.Content>
+    
+</ContentPage>

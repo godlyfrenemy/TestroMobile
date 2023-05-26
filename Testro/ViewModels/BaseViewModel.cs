@@ -106,6 +106,13 @@ namespace Testro.ViewModels
             return values.ConvertAll(value => (T)value);
         }
 
+        public static long InsertValues(string query, MySqlConnection connection)
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.ExecuteNonQuery();
+            return command.LastInsertedId;
+        }
+
 
         bool isBusy = false;
         public bool IsBusy

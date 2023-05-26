@@ -18,6 +18,20 @@
           }
         }
       },
+      "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "3.3.0.912540"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -280,6 +294,7 @@
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "MySqlConnector": "2.2.6",
+          "Naxam.TopTabbedPage.Forms": "0.0.3.13-pre",
           "Xamarin.Essentials": "1.7.0",
           "Xamarin.Forms": "5.0.0.2196",
           "ZXing.Net.Mobile": "2.4.1",
@@ -310,6 +325,20 @@
           }
         }
       },
+      "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "3.3.0.912540"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -572,6 +601,7 @@
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "MySqlConnector": "2.2.6",
+          "Naxam.TopTabbedPage.Forms": "0.0.3.13-pre",
           "Xamarin.Essentials": "1.7.0",
           "Xamarin.Forms": "5.0.0.2196",
           "ZXing.Net.Mobile": "2.4.1",
@@ -602,6 +632,20 @@
           }
         }
       },
+      "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "3.3.0.912540"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -864,6 +908,7 @@
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "MySqlConnector": "2.2.6",
+          "Naxam.TopTabbedPage.Forms": "0.0.3.13-pre",
           "Xamarin.Essentials": "1.7.0",
           "Xamarin.Forms": "5.0.0.2196",
           "ZXing.Net.Mobile": "2.4.1",
@@ -894,6 +939,20 @@
           }
         }
       },
+      "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "3.3.0.912540"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll": {},
+          "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -1156,6 +1215,7 @@
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "MySqlConnector": "2.2.6",
+          "Naxam.TopTabbedPage.Forms": "0.0.3.13-pre",
           "Xamarin.Essentials": "1.7.0",
           "Xamarin.Forms": "5.0.0.2196",
           "ZXing.Net.Mobile": "2.4.1",
@@ -1196,6 +1256,20 @@
         "logo.png",
         "mysqlconnector.2.2.6.nupkg.sha512",
         "mysqlconnector.nuspec"
+      ]
+    },
+    "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+      "sha512": "IzDNuXY8xV+rCRNXOfZJuDAg4lTqojU+B6jWO6SFafg+thjb7UK5JfLw54ioKmB0dlwZYZxVjzSExkVkZ4TEZA==",
+      "type": "package",
+      "path": "naxam.toptabbedpage.forms/0.0.3.13-pre",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Forms.dll",
+        "lib/Xamarin.iOS10/Naxam.TopTabbedPage.Platform.iOS.dll",
+        "lib/netstandard2.0/Naxam.TopTabbedPage.Forms.dll",
+        "naxam.toptabbedpage.forms.0.0.3.13-pre.nupkg.sha512",
+        "naxam.toptabbedpage.forms.nuspec"
       ]
     },
     "System.Buffers/4.5.1": {
@@ -1660,6 +1734,7 @@
   "projectFileDependencyGroups": {
     "Xamarin.iOS,Version=v1.0": [
       "MySqlConnector >= 2.2.6",
+      "Naxam.TopTabbedPage.Forms >= 0.0.3.13-pre",
       "Testro >= 1.0.0",
       "Xamarin.Essentials >= 1.7.0",
       "Xamarin.Forms >= 5.0.0.2196",
@@ -1712,6 +1787,10 @@
           "MySqlConnector": {
             "target": "Package",
             "version": "[2.2.6, )"
+          },
+          "Naxam.TopTabbedPage.Forms": {
+            "target": "Package",
+            "version": "[0.0.3.13-pre, )"
           },
           "Xamarin.Essentials": {
             "target": "Package",

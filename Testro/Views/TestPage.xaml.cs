@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Testro.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Testro.ViewModels
+namespace Testro.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class TestPage : ContentPage
 	{
 		public TestPage (long testId)
 		{
-			BindingContext = new TestViewModel(testId);
-            InitializeComponent ();
-		}
+			InitializeComponent ();
+            BindingContext = new TestProcessViewModel(testId);
+        }
 
 	}
 }

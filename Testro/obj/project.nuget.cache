@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "1IslDP9IUaDSw5wa7rBCRnJw3ZJeF4nb2JZsbLJ0U20wJ2ajfQATktp6xx3a1QFZRfaToB0v1Rp+gPkCF0Mcjg==",
+  "dgSpecHash": "XIIfF8GRPi2Hb7f2OMsCDq4jR2oF6Ou3zLwoPSXDcAwt4HqbL9Qs7zYS0XDPW7/Kod+UDywPsnGQyR3N70J/DQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\lenovo\\source\\repos\\Testro\\Testro\\Testro\\Testro.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lenovo\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\mysqlconnector\\2.2.6\\mysqlconnector.2.2.6.nupkg.sha512",
+    "C:\\Users\\lenovo\\.nuget\\packages\\naxam.toptabbedpage.forms\\0.0.3.13-pre\\naxam.toptabbedpage.forms.0.0.3.13-pre.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",

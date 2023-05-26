@@ -8,9 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("Testro.Views.TestPage.xaml", "Views/TestPage.xaml", typeof(global::Testro.ViewModels.TestPage))]
+[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("Testro.Views.TestPage.xaml", "Views/TestPage.xaml", typeof(global::Testro.Views.TestPage))]
 
-namespace Testro.ViewModels {
+namespace Testro.Views {
     
     
     [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("Views\\TestPage.xaml")]

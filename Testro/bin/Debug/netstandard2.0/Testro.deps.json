@@ -11,6 +11,7 @@
         "dependencies": {
           "MySqlConnector": "2.2.6",
           "NETStandard.Library": "2.0.3",
+          "Naxam.TopTabbedPage.Forms": "0.0.3.13-pre",
           "Xamarin.Essentials": "1.7.0",
           "Xamarin.Forms": "5.0.0.2196",
           "ZXing.Net.Mobile": "2.4.1",
@@ -32,6 +33,17 @@
           "lib/netstandard2.0/MySqlConnector.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.2.6.0"
+          }
+        }
+      },
+      "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+        "dependencies": {
+          "Xamarin.Forms": "5.0.0.2196"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Naxam.TopTabbedPage.Forms.dll": {
+            "assemblyVersion": "0.0.3.5",
+            "fileVersion": "0.0.3.5"
           }
         }
       },
@@ -176,6 +188,13 @@
       "sha512": "sha512-oYHl9TNhJXBEqfuiaEsOdBPkdULOcCCbqZJzYhy0rtREnMVoluG73GM8+gwBCMb1vbjv9K1ehQnhe0cxdxfOCA==",
       "path": "mysqlconnector/2.2.6",
       "hashPath": "mysqlconnector.2.2.6.nupkg.sha512"
+    },
+    "Naxam.TopTabbedPage.Forms/0.0.3.13-pre": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IzDNuXY8xV+rCRNXOfZJuDAg4lTqojU+B6jWO6SFafg+thjb7UK5JfLw54ioKmB0dlwZYZxVjzSExkVkZ4TEZA==",
+      "path": "naxam.toptabbedpage.forms/0.0.3.13-pre",
+      "hashPath": "naxam.toptabbedpage.forms.0.0.3.13-pre.nupkg.sha512"
     },
     "NETStandard.Library/2.0.3": {
       "type": "package",

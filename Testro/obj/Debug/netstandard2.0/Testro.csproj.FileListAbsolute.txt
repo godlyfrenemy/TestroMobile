@@ -19,3 +19,5 @@ C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\SignUpPage.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\CabinetPage.xaml.g.cs
 C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\TestPage.xaml.g.cs
+C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\QuestionPage.xaml.g.cs
+C:\Users\lenovo\source\repos\Testro\Testro\Testro\obj\Debug\netstandard2.0\Views\TestProcessPage.xaml.g.cs

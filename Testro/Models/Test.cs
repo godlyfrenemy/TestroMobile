@@ -12,9 +12,11 @@ namespace Testro.Models
     {
         public readonly static long UNKNOWN_ID = -1;
 
-        public long TestDataId { get; set; } = UNKNOWN_ID;
-        public long TestTimeConstraint { get; set; } = 0;
-        public long TestTypeConstraintId { get; set; } = UNKNOWN_ID;
+        public long TestDataId { get; private set; } = UNKNOWN_ID;
+        public long TestTimeConstraint { get; private set; } = 0;
+        public long TestQuestionTimeConstraint { get; set; } = 0;
+        public long TestTypeConstraintId { get; private set; } = UNKNOWN_ID;
+        public string TestTypeName { get; private set; }
 
         public static TestData CreateTestData(BaseViewModel viewModel, long testDataId)
         {
@@ -24,7 +26,9 @@ namespace Testro.Models
             {
                 testData.TestDataId = testDataId;
                 testData.TestTimeConstraint = viewModel.GetDataBaseRequestResult(testData.GetTimeConstraintValue) ?? 0;
+                testData.TestQuestionTimeConstraint = viewModel.GetDataBaseRequestResult(testData.GetQuestionTimeConstraintValue) ?? 0;
                 testData.TestTypeConstraintId = viewModel.GetDataBaseRequestResult(testData.GetTypeConstraintValue) ?? UNKNOWN_ID;
+                testData.TestTypeName = viewModel.GetDataBaseRequestResult(testData.GetTypeConstraintName);
             }
 
             return testData;
@@ -34,6 +38,12 @@ namespace Testro.Models
         {
             string query = "SELECT * FROM `tests_data` WHERE `test_data_id` = '" + TestDataId + "'";
             return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "test_time_constraint");
+        }
+
+        private long? GetQuestionTimeConstraintValue(MySqlConnection connection)
+        {
+            string query = "SELECT * FROM `tests_data` WHERE `test_data_id` = '" + TestDataId + "'";
+            return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "test_question_time_constraint");
         }
 
         private long? GetTypeConstraintValue(MySqlConnection connection)
@@ -63,9 +73,9 @@ namespace Testro.Models
             {
                 SetProperty(ref _testName, value);
             }
-        } 
+        }
 
-        public ObservableCollection<Question> Questions { get; set; }
+        public List<Question> Questions { get; set; }
 
         public static Test CreateTest(BaseViewModel viewModel, long testId)
         {
@@ -98,10 +108,10 @@ namespace Testro.Models
             return TestData.CreateTestData(viewModel, testDataId);
         }
 
-        private ObservableCollection<Question> GetQuestions(BaseViewModel viewModel)
+        private List<Question> GetQuestions(BaseViewModel viewModel)
         {
             List<long> questionIds = viewModel.GetDataBaseRequestResult(GetTestQuestionIds);
-            ObservableCollection<Question> questions = new ObservableCollection<Question>();
+            List<Question> questions = new List<Question>();
 
             questionIds.ForEach(delegate (long questionId)
             {

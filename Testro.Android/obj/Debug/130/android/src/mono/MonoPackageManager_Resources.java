@@ -6,6 +6,7 @@ public class MonoPackageManager_Resources {
 		"FastAndroidCamera.dll",
 		"FormsViewGroup.dll",
 		"MySqlConnector.dll",
+		"Naxam.TopTabbedPage.Forms.dll",
 		"System.Diagnostics.DiagnosticSource.dll",
 		"Testro.dll",
 		"Xamarin.Android.Support.Annotations.dll",
