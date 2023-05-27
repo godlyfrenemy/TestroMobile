@@ -18,6 +18,9 @@ namespace Testro.Views
         {
             InitializeComponent();
             BindingContext = new QuestionViewModel(testViewModel, questionIndex);
+
+            if(testViewModel.Test.TestData.TestQuestionTimeConstraint == 0)
+                TestTimeInfo.Children.RemoveAt(1);
         }
 
         public void Handle_ItemTapped(object sender, EventArgs e)
@@ -30,6 +33,12 @@ namespace Testro.Views
 
             QuestionViewModel questionViewModel = BindingContext as QuestionViewModel;
             questionViewModel.AddUserAnswer(MyListView, e);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            (BindingContext as QuestionViewModel).OnPageAppearing();
         }
     }
 }

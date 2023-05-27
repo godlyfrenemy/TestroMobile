@@ -11,11 +11,12 @@ namespace Testro.ViewModels
 {
     public class TestProcessViewModel : TestViewModel
     {
-        public TestProcessViewModel(long testId) : base(testId) { }
+        public TestProcessViewModel(long testId) : base(testId) {}
 
         public int CurrentTestIndex { get; set; } = 0;
         public TestProcessPage TestProcessPage { get; set; }
         public List<UserAnswer> UserAnswers { get; set; }
+        public DateTime TestEndTime { get; set; }
 
         public void AddUserAnswer(int questionIndex, long questionId, long answerId)
         {
@@ -39,12 +40,18 @@ namespace Testro.ViewModels
 
         public void ContinueTesting()
         {
-            if (!IsCurrentPageLast())
-                TestProcessPage.CurrentPage = TestProcessPage.Children[CurrentTestIndex++];
-            else if (!(GetDataBaseRequestResult(WriteUserAnswers) ?? false))
-                DisplayErrorAlert("Не вдається записати результат!");
+            if(IsCurrentPageLast())
+                EndTesting();
             else
-                Application.Current.MainPage.Navigation.PopModalAsync();
+                TestProcessPage.CurrentPage = TestProcessPage.Children[++CurrentTestIndex];
+        }
+
+        public void EndTesting()
+        {
+            if (!(GetDataBaseRequestResult(WriteUserAnswers) ?? false))
+                DisplayErrorAlert("Не вдається записати результат!");
+
+            Application.Current.MainPage.Navigation.PopModalAsync();
         }
 
         public bool IsCurrentPageLast()

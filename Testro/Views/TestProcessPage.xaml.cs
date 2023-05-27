@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Testro.Models;
 using Testro.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace Testro.Views
@@ -21,12 +22,14 @@ namespace Testro.Views
             viewModel = (TestProcessViewModel)testViewModel;
             viewModel.TestProcessPage = this;
             viewModel.UserAnswers = new List<UserAnswer>(viewModel.Test.Questions.Count);
+            viewModel.TestEndTime = DateTime.Now.AddMinutes(testViewModel.Test.TestData.TestTimeConstraint);
 
             for (int i = 0; i < viewModel.Test.Questions.Count; i++)
             {
                 viewModel.UserAnswers.Add(new UserAnswer());
                 Children.Add(new QuestionPage(viewModel, i));
             }
+
         }
     }
 }

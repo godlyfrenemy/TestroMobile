@@ -4003,9 +4003,21 @@
             "target": "Package",
             "version": "[2.2.6, )"
           },
+          "MySqlConnector": {
+            "target": "Package",
+            "version": "[2.2.6, )"
+          },
           "Naxam.TopTabbedPage.Forms": {
             "target": "Package",
             "version": "[0.0.3.13-pre, )"
+          },
+          "Naxam.TopTabbedPage.Forms": {
+            "target": "Package",
+            "version": "[0.0.3.13-pre, )"
+          },
+          "Xamarin.Essentials": {
+            "target": "Package",
+            "version": "[1.7.0, )"
           },
           "Xamarin.Essentials": {
             "target": "Package",
@@ -4015,7 +4027,19 @@
             "target": "Package",
             "version": "[5.0.0.2196, )"
           },
+          "Xamarin.Forms": {
+            "target": "Package",
+            "version": "[5.0.0.2196, )"
+          },
           "ZXing.Net.Mobile": {
+            "target": "Package",
+            "version": "[2.4.1, )"
+          },
+          "ZXing.Net.Mobile": {
+            "target": "Package",
+            "version": "[2.4.1, )"
+          },
+          "ZXing.Net.Mobile.Forms": {
             "target": "Package",
             "version": "[2.4.1, )"
           },

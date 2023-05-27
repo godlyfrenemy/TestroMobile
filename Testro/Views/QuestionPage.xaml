@@ -5,37 +5,90 @@
              Title="{Binding Title}">
 
     <ContentPage.Content>
-        <Grid Margin="20, 20, 20, 20">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+
+            <Grid BackgroundColor="Black"
+                  Grid.Row="0"
+                  Margin="0, 0, 0, 10"
+                  x:Name="TestTimeInfo"
+                  RowSpacing="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid BackgroundColor="AliceBlue"
+                      Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Text="Час на тестування"
+                            FontSize="16"
+                            Grid.Column="0"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"/>
+                    <Label  Text="{Binding TimeToEndTest }"
+                            FontSize="Large" 
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center">
+                    </Label>
+                </Grid>
+                <Grid BackgroundColor="AliceBlue"
+                      Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Text="Час на запитання"
+                            FontSize="16"
+                            Grid.Column="0"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"/>
+                    <Label  Text="{Binding TimeToEndQuestion }"
+                            FontSize="Large" 
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            TextColor="{Binding QuestionTimeColor}">
+                    </Label>
+                </Grid>
+            </Grid>
+
+            
 
             <Label Text="{Binding Question.QuestionName }"
                    FontSize="Large"
                    HorizontalOptions="CenterAndExpand"
-                   Grid.Row="0"
-                   VerticalOptions="Start"/>
+                   Grid.Row="1"
+                   VerticalOptions="Start"
+                   Margin="20, 0, 20, 0"/>
 
             <Label Text="Варіанти відповіді"
                    FontSize="Large"
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="Start"
-                   Grid.Row="1"/>
+                   Grid.Row="2"/>
 
             <ListView x:Name="MyListView"
                       ItemsSource="{ Binding Answers }"
                       CachingStrategy="RecycleElement"
-                      Margin="0, 40, 0, 0"
-                      Grid.Row="1"
-                      VerticalOptions="CenterAndExpand">
+                      Margin="20, 40, 20, 0"
+                      Grid.Row="2"
+                      VerticalOptions="CenterAndExpand"
+                      IsEnabled="{ Binding CanSetAnswers }">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="Handle_ItemTapped">
                             <StackLayout>
-                                <Label Text="{ Binding AnswerText }" FontSize="Large" Padding="10, 10, 10, 10"/>
+                                <Label Text="{ Binding AnswerText }" FontSize="Large" Padding="10, 10, 10, 10" VerticalTextAlignment="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -47,9 +100,9 @@
                     CornerRadius="20"
                     Command="{Binding ContinueTestingCommand}"
                     VerticalOptions="EndAndExpand"
-                    Grid.Row="2"/>
+                    Grid.Row="3"
+                    Margin="20, 0, 20, 20"/>
         </Grid>
-        
     </ContentPage.Content>
     
 </ContentPage>
