@@ -18,9 +18,9 @@ namespace Testro.ViewModels
         public List<UserAnswer> UserAnswers { get; set; }
         public DateTime TestEndTime { get; set; }
 
-        public void AddUserAnswer(int questionIndex, long questionId, long answerId)
+        public void AddUserAnswer(int questionIndex, UserAnswer userAnswer)
         {
-            UserAnswers[questionIndex] = new UserAnswer(questionId, answerId);
+            UserAnswers[questionIndex] = userAnswer;
         }
 
         private bool? WriteUserAnswers(MySqlConnection connection)
@@ -28,12 +28,21 @@ namespace Testro.ViewModels
             bool isOk = true;
 
             UserAnswers.ForEach(x =>
-            {
-                string insertQuestionResultsQuery = "INSERT INTO question_results(`question_id`, `result_answer_id`) VALUES('" + x.QuestionId + "', '" + x.AnswerId + "')";
+            {            
+                string insertQuestionResultsQuery = "INSERT INTO question_results(`question_id`, `result_answer_id`, `answer_time`) " +
+                                                    "VALUES('" + x.QuestionId + "', '" + x.AnswerId + "', '" + x.AnswerTime + "')";
                 long questionResultsId = InsertValues(insertQuestionResultsQuery, connection);
-                string insertPupilUsersQuery = "INSERT INTO pupil_results(`pupil_id`, `question_result_id`) VALUES('" + User.UserId + "', '" + questionResultsId + "')";
+                string insertPupilUsersQuery = "INSERT INTO pupil_results(`pupil_id`, `question_result_id`) " +
+                                               "VALUES('" + User.UserId + "', '" + questionResultsId + "')";
                 isOk &= InsertValues(insertPupilUsersQuery, connection) != User.UNKNOWN_ID;
             });
+
+            if (isOk)
+            {
+                string insertTestCompletionQuery = "INSERT INTO pupil_test_completions(`pupil_id`, `test_id`) " +
+                                                        "VALUES('" + User.UserId + "', '" + Test.TestId + "')";
+                isOk = InsertValues(insertTestCompletionQuery, connection) != User.UNKNOWN_ID;
+            }
 
             return isOk;
         }
@@ -46,11 +55,22 @@ namespace Testro.ViewModels
                 TestProcessPage.CurrentPage = TestProcessPage.Children[++CurrentTestIndex];
         }
 
-        public void EndTesting()
+        public void EndTesting(bool writeEmpty = false)
         {
+            if (writeEmpty)
+            {
+                UserAnswers.ForEach(x =>
+                {
+                    x.AnswerId = UserAnswer.UNKNOWN_ID;
+                });
+
+                DisplayErrorAlert("Результати тестування було анульовано");
+            }
+
             if (!(GetDataBaseRequestResult(WriteUserAnswers) ?? false))
                 DisplayErrorAlert("Не вдається записати результат!");
 
+            App.IsOnTestingProcess = false;
             Application.Current.MainPage.Navigation.PopModalAsync();
         }
 

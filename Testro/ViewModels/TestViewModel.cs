@@ -18,11 +18,35 @@ namespace Testro.ViewModels
             StartTestCommand = new Command(OnStartTestClicked);
         }
 
+        public void OnAppearing()
+        {
+            StartButtonEnabled = GetDataBaseRequestResult(HasUserAccessToTest);
+        }
+
+        private bool _startButtonEnabled = true;
+        public bool StartButtonEnabled { 
+            get => _startButtonEnabled; 
+            set => SetProperty(ref _startButtonEnabled, value);
+        }
+
         public Test Test { get; set; } = new Test();
 
         private async void OnStartTestClicked()
         {
             await Application.Current.MainPage.Navigation.PushModalAsync(new TestProcessPage(this));
+        }
+
+        private bool HasUserAccessToTest(MySqlConnection connection)
+        {
+            bool hasAccess = Test.Questions.Count > 0;
+
+            if (hasAccess)
+            {
+                string query = "SELECT * FROM `pupil_test_completions` WHERE `pupil_id` = '" + User.UserId + "' AND `test_id` = '" + Test.TestId + "'"; ;
+                hasAccess = !GetHasRowsAndClose(query, connection);
+            }
+
+            return hasAccess;
         }
     }
 }

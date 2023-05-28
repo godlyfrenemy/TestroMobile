@@ -14,9 +14,9 @@ namespace Testro.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestProcessPage : TabbedPage
     {
-        private readonly TestProcessViewModel viewModel;
+        public readonly TestProcessViewModel viewModel;
 
-        public TestProcessPage (TestViewModel testViewModel)
+        public TestProcessPage(TestViewModel testViewModel)
         {
             InitializeComponent();
             viewModel = (TestProcessViewModel)testViewModel;
@@ -30,6 +30,13 @@ namespace Testro.Views
                 Children.Add(new QuestionPage(viewModel, i));
             }
 
+            App.IsOnTestingProcess = true;
+        }
+
+        public void ForceEndTesting()
+        {
+            if (!App.IsOnTestingProcess)
+                viewModel.EndTesting(true);
         }
     }
 }

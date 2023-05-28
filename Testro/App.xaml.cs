@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Testro.Models;
 using Testro.Views;
 using Xamarin.Essentials;
@@ -9,6 +10,7 @@ namespace Testro
 {
     public partial class App : Application
     {
+        public static bool IsOnTestingProcess { get; set; } = false;
 
         public App()
         {
@@ -36,6 +38,13 @@ namespace Testro
 
         protected override void OnResume()
         {
+            if(IsOnTestingProcess)
+            {
+                IsOnTestingProcess = false;
+                int index = Current.MainPage.Navigation.ModalStack.Count - 1;
+                Page currPage = Current.MainPage.Navigation.ModalStack[index];
+                (currPage as TestProcessPage).ForceEndTesting();
+            }
         }
 
         protected bool IsLoggedIn()

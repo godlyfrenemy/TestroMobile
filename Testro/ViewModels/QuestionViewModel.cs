@@ -83,7 +83,9 @@ namespace Testro.ViewModels
         public void AddUserAnswer(object sender, EventArgs e)
         {            
             Answer answer = (sender as ListView).SelectedItem as Answer;
-            TestProcessViewModel.AddUserAnswer(QuestionIndex, Question.QuestionId, answer.AnswerId);
+            int answerTime = TestQuestionTime - (int)TimeToEndQuestion.TotalSeconds;
+            UserAnswer userAnswer = new UserAnswer(Question.QuestionId, answer.AnswerId, answerTime);
+            TestProcessViewModel.AddUserAnswer(QuestionIndex, userAnswer);
         }
 
         private bool OnTimerTick()

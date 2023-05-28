@@ -109,6 +109,7 @@ namespace Testro.ViewModels
         public static long InsertValues(string query, MySqlConnection connection)
         {
             MySqlCommand command = new MySqlCommand(query, connection);
+            command.Prepare();
             command.ExecuteNonQuery();
             return command.LastInsertedId;
         }

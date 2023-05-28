@@ -18,5 +18,11 @@ namespace Testro.Views
             BindingContext = new TestProcessViewModel(testId);
         }
 
-	}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            (BindingContext as TestProcessViewModel).OnAppearing();
+        }
+
+    }
 }

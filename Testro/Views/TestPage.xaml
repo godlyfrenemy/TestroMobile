@@ -98,7 +98,8 @@
                     CornerRadius="20"
                     Command="{Binding StartTestCommand}"
                     VerticalOptions="EndAndExpand"
-                    Margin="20, 20, 20, 20"/>
+                    Margin="20, 20, 20, 20"
+                    IsEnabled="{Binding StartButtonEnabled} "/>
                     
 
 
