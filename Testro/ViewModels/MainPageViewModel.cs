@@ -32,7 +32,7 @@ namespace Testro.ViewModels
         private bool? CheckIfTestExists(MySqlConnection connection)
         {
             string query = "SELECT * FROM `tests` WHERE `test_id` = '" + ActiveTest + "'";
-            return GetHasRowsAndClose(query, connection);
+            return GetHasRows(query, connection);
         }
 
         public Command ScanQRCodeCommand { get; set; }

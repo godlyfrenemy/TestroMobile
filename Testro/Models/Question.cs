@@ -14,6 +14,7 @@ namespace Testro.Models
         public long QuestionId { get; set; } = UNKNOWN_ID;
         public string QuestionName { get; set; } = string.Empty; 
         public long CorrectAnswerId { get; set; } = UNKNOWN_ID;
+        public long QuestionResultId { get; set; } = UNKNOWN_ID;
         public ObservableCollection<Answer> Answers { get; set; }
 
         public static Question CreateQuestion(BaseViewModel viewModel, long questionId)
@@ -31,19 +32,19 @@ namespace Testro.Models
             return question;
         }
 
-        private string GetQuestionName(MySqlConnection connection)
+        protected string GetQuestionName(MySqlConnection connection)
         {
             string query = "SELECT * FROM `questions` WHERE `question_id` = '" + QuestionId + "'";
-            return BaseViewModel.GetFirstValueAndClose<string>(query, connection, "question_name");
+            return BaseViewModel.GetFirstValue<string>(query, connection, "question_name");
         }
 
-        private long? GetCorrectAnswerId(MySqlConnection connection)
+        protected long? GetCorrectAnswerId(MySqlConnection connection)
         {
             string query = "SELECT * FROM `questions` WHERE `question_id` = '" + QuestionId + "'";
-            return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "correct_answer_id");
+            return BaseViewModel.GetFirstValue<long>(query, connection, "correct_answer_id");
         }
 
-        private ObservableCollection<Answer> GetAnswers(BaseViewModel viewModel)
+        protected ObservableCollection<Answer> GetAnswers(BaseViewModel viewModel)
         {
             List<long> answerIds = viewModel.GetDataBaseRequestResult(GetQuestionAnswerIds);
             ObservableCollection<Answer> answers = new ObservableCollection<Answer>();

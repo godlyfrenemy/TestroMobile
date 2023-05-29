@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Testro.Models;
 using System.Runtime.ConstrainedExecution;
 using ZXing;
+using Xamarin.Essentials;
 
 namespace Testro.ViewModels
 {
@@ -57,7 +58,7 @@ namespace Testro.ViewModels
             return result;
         }
 
-        public static bool GetHasRowsAndClose(string query, MySqlConnection connection)
+        public static bool GetHasRows(string query, MySqlConnection connection)
         {
             MySqlDataReader reader = new MySqlCommand(query, connection).ExecuteReader();
             bool result = reader.HasRows;
@@ -65,7 +66,7 @@ namespace Testro.ViewModels
             return result;
         }
 
-        public static T GetFirstValueAndClose<T>(string query, MySqlConnection connection, string fieldName)
+        public static T GetFirstValue<T>(string query, MySqlConnection connection, string fieldName)
         {
             MySqlDataReader reader = new MySqlCommand(query, connection).ExecuteReader();
             object result = default;
@@ -109,9 +110,14 @@ namespace Testro.ViewModels
         public static long InsertValues(string query, MySqlConnection connection)
         {
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Prepare();
             command.ExecuteNonQuery();
             return command.LastInsertedId;
+        }
+
+        public static bool UpdateValues(string query, MySqlConnection connection)
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            return command.ExecuteNonQuery() != 0;
         }
 
 

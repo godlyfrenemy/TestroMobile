@@ -20,5 +20,6 @@ namespace Testro.Models
         public long QuestionId { get; set; } = UNKNOWN_ID;
         public long AnswerId { get; set; } = UNKNOWN_ID;
         public int AnswerTime { get; set; } = 0;
+        public long QuestionResultId { get; set; } = UNKNOWN_ID;
     }
 }

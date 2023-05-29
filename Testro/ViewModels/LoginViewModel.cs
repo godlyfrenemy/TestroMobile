@@ -52,20 +52,20 @@ namespace Testro.ViewModels
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin +
                                "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
-            return GetFirstValueAndClose<long>(query, connection, "pupil_id");
+            return GetFirstValue<long>(query, connection, "pupil_id");
         }
 
         private long? GetUserDataId(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin +
                                "' AND `pupil_password` = '" + GetHash(UserPassword) + "'";
-            return GetFirstValueAndClose<long>(query, connection, "pupil_data_id");
+            return GetFirstValue<long>(query, connection, "pupil_data_id");
         }
 
         private bool? DoesUserExist(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
-            return GetHasRowsAndClose(query, connection);
+            return GetHasRows(query, connection);
         }
 
         private string _userLogin = string.Empty;

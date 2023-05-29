@@ -88,7 +88,11 @@
                     <DataTemplate>
                         <ViewCell Tapped="Handle_ItemTapped">
                             <StackLayout>
-                                <Label Text="{ Binding AnswerText }" FontSize="Large" Padding="10, 10, 10, 10" VerticalTextAlignment="Center"/>
+                                <Label Text="{ Binding AnswerText }" 
+                                       FontSize="Large" 
+                                       Padding="10, 10, 10, 10" 
+                                       VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

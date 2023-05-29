@@ -40,7 +40,7 @@ namespace Testro.ViewModels
         private bool? CheckIfUserExists(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupil_users` WHERE `pupil_login` = '" + UserLogin + "'";
-            return GetHasRowsAndClose(query, connection);
+            return GetHasRows(query, connection);
         }
 
         private long? AddNewUser(MySqlConnection connection)

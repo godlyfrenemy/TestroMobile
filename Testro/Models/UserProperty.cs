@@ -24,7 +24,7 @@ namespace Testro.Models
         public bool? SetValueFromDataBase(MySqlConnection connection)
         {
             string query = "SELECT * FROM `pupils_data` WHERE `pupil_data_id` = '" + User.UserDataId + "'";
-            PropertyValue = BaseViewModel.GetFirstValueAndClose<string>(query, connection, _dataBaseFieldName);
+            PropertyValue = BaseViewModel.GetFirstValue<string>(query, connection, _dataBaseFieldName);
             return PropertyValue.Length > 0;
         }
 

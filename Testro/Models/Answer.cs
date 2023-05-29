@@ -29,7 +29,7 @@ namespace Testro.Models
         private string GetAnswerText(MySqlConnection connection)
         {
             string query = "SELECT * FROM `answers` WHERE `answer_id` = '" + AnswerId + "'";
-            return BaseViewModel.GetFirstValueAndClose<string>(query, connection, "answer_text");
+            return BaseViewModel.GetFirstValue<string>(query, connection, "answer_text");
         }
     }
 }

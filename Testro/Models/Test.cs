@@ -37,25 +37,25 @@ namespace Testro.Models
         private long? GetTimeConstraintValue(MySqlConnection connection)
         {
             string query = "SELECT * FROM `tests_data` WHERE `test_data_id` = '" + TestDataId + "'";
-            return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "test_time_constraint");
+            return BaseViewModel.GetFirstValue<long>(query, connection, "test_time_constraint");
         }
 
         private long? GetQuestionTimeConstraintValue(MySqlConnection connection)
         {
             string query = "SELECT * FROM `tests_data` WHERE `test_data_id` = '" + TestDataId + "'";
-            return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "test_question_time_constraint");
+            return BaseViewModel.GetFirstValue<long>(query, connection, "test_question_time_constraint");
         }
 
         private long? GetTypeConstraintValue(MySqlConnection connection)
         {
             string query = "SELECT * FROM `tests_data` WHERE `test_data_id` = '" + TestDataId + "'";
-            return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "test_type_constraint_id");
+            return BaseViewModel.GetFirstValue<long>(query, connection, "test_type_constraint_id");
         }
 
         private string GetTypeConstraintName(MySqlConnection connection)
         {
             string query = "SELECT * FROM `test_types` WHERE `test_type_id` = '" + TestTypeConstraintId + "'";
-            return BaseViewModel.GetFirstValueAndClose<string>(query, connection, "test_type_name");
+            return BaseViewModel.GetFirstValue<string>(query, connection, "test_type_name");
         }
     }
 
@@ -77,7 +77,7 @@ namespace Testro.Models
 
         public List<Question> Questions { get; set; }
 
-        public static Test CreateTest(BaseViewModel viewModel, long testId)
+        public static Test CreateTest(BaseViewModel viewModel, long testId, bool withMistakesOnly)
         {
             Test test = new Test();
 
@@ -86,7 +86,7 @@ namespace Testro.Models
                 test.TestId = testId;
                 test.TestName = viewModel.GetDataBaseRequestResult(test.GetTestName);
                 test.TestData = test.GetTestData(viewModel);
-                test.Questions = test.GetQuestions(viewModel);
+                test.Questions = test.GetQuestions(viewModel, withMistakesOnly);
             }
             return test;
         }
@@ -94,23 +94,25 @@ namespace Testro.Models
         private long? GetTestDataId(MySqlConnection connection)
         {
             string query = "SELECT * FROM `tests` WHERE `test_id` = '" + TestId + "'";
-            return BaseViewModel.GetFirstValueAndClose<long>(query, connection, "test_data_id");
+            return BaseViewModel.GetFirstValue<long>(query, connection, "test_data_id");
         }
-        private string GetTestName(MySqlConnection connection)
+        protected string GetTestName(MySqlConnection connection)
         {
             string query = "SELECT * FROM `tests` WHERE `test_id` = '" + TestId + "'";
-            return BaseViewModel.GetFirstValueAndClose<string>(query, connection, "test_name");
+            return BaseViewModel.GetFirstValue<string>(query, connection, "test_name");
         }
 
-        private TestData GetTestData(BaseViewModel viewModel)
+        protected TestData GetTestData(BaseViewModel viewModel)
         {
             long testDataId = viewModel.GetDataBaseRequestResult(GetTestDataId) ?? UNKNOWN_ID;
             return TestData.CreateTestData(viewModel, testDataId);
         }
 
-        private List<Question> GetQuestions(BaseViewModel viewModel)
+        protected virtual List<Question> GetQuestions(BaseViewModel viewModel, bool withMistakesOnly)
         {
-            List<long> questionIds = viewModel.GetDataBaseRequestResult(GetTestQuestionIds);
+            List<long> questionIds = withMistakesOnly ? 
+                                    viewModel.GetDataBaseRequestResult(GetTestQuestionIdsWithMistakes) : 
+                                    viewModel.GetDataBaseRequestResult(GetTestQuestionIds);
             List<Question> questions = new List<Question>();
 
             questionIds.ForEach(delegate (long questionId)
@@ -121,9 +123,15 @@ namespace Testro.Models
             return questions;
         }
 
-        private List<long> GetTestQuestionIds(MySqlConnection connection)
+        protected List<long> GetTestQuestionIds(MySqlConnection connection)
         {
             string query = "SELECT * FROM `test_questions` WHERE `test_id` = '" + TestId + "'";
+            return BaseViewModel.GetAllValues<long>(query, connection, "question_id");
+        }
+
+        protected List<long> GetTestQuestionIdsWithMistakes(MySqlConnection connection)
+        {
+            string query = "CALL GetTestQuestionsWithMistakes('" + TestId + "', '" + User.UserId + "');";
             return BaseViewModel.GetAllValues<long>(query, connection, "question_id");
         }
     }

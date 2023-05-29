@@ -11,9 +11,9 @@ namespace Testro.ViewModels
 {
     public class TestProcessViewModel : TestViewModel
     {
-        public TestProcessViewModel(long testId) : base(testId) {}
+        public TestProcessViewModel(long testId, bool withMistakesOnly = false) : base(testId, withMistakesOnly) {}
 
-        public int CurrentTestIndex { get; set; } = 0;
+        public int CurrentQuestionIndex { get; set; } = 0;
         public TestProcessPage TestProcessPage { get; set; }
         public List<UserAnswer> UserAnswers { get; set; }
         public DateTime TestEndTime { get; set; }
@@ -23,7 +23,12 @@ namespace Testro.ViewModels
             UserAnswers[questionIndex] = userAnswer;
         }
 
-        private bool? WriteUserAnswers(MySqlConnection connection)
+        protected bool? WriteTestingResults(MySqlConnection connection)
+        {
+            return (WriteUserAnswers(connection) ?? false) && WriteCompletionTimes(connection);
+        }
+
+        protected virtual bool? WriteUserAnswers(MySqlConnection connection)
         {
             bool isOk = true;
 
@@ -37,14 +42,14 @@ namespace Testro.ViewModels
                 isOk &= InsertValues(insertPupilUsersQuery, connection) != User.UNKNOWN_ID;
             });
 
-            if (isOk)
-            {
-                string insertTestCompletionQuery = "INSERT INTO pupil_test_completions(`pupil_id`, `test_id`) " +
-                                                        "VALUES('" + User.UserId + "', '" + Test.TestId + "')";
-                isOk = InsertValues(insertTestCompletionQuery, connection) != User.UNKNOWN_ID;
-            }
-
             return isOk;
+        }
+
+        protected virtual bool WriteCompletionTimes(MySqlConnection connection)
+        {
+            string insertTestCompletionQuery = "INSERT INTO pupil_test_completions(`pupil_id`, `test_id`) " +
+                                               "VALUES('" + User.UserId + "', '" + Test.TestId + "')";
+            return InsertValues(insertTestCompletionQuery, connection) != User.UNKNOWN_ID;
         }
 
         public void ContinueTesting()
@@ -52,10 +57,10 @@ namespace Testro.ViewModels
             if(IsCurrentPageLast())
                 EndTesting();
             else
-                TestProcessPage.CurrentPage = TestProcessPage.Children[++CurrentTestIndex];
+                TestProcessPage.CurrentPage = TestProcessPage.Children[++CurrentQuestionIndex];
         }
 
-        public void EndTesting(bool writeEmpty = false)
+        public virtual void EndTesting(bool writeEmpty = false)
         {
             if (writeEmpty)
             {
@@ -67,7 +72,7 @@ namespace Testro.ViewModels
                 DisplayErrorAlert("Результати тестування було анульовано");
             }
 
-            if (!(GetDataBaseRequestResult(WriteUserAnswers) ?? false))
+            if (!(GetDataBaseRequestResult(WriteTestingResults) ?? false))
                 DisplayErrorAlert("Не вдається записати результат!");
 
             App.IsOnTestingProcess = false;
@@ -76,7 +81,7 @@ namespace Testro.ViewModels
 
         public bool IsCurrentPageLast()
         {
-            return Test.Questions.Count <= CurrentTestIndex + 1;
+            return Test.Questions.Count <= CurrentQuestionIndex + 1;
         }
     }
 }

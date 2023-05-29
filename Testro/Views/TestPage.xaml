@@ -98,8 +98,14 @@
                     CornerRadius="20"
                     Command="{Binding StartTestCommand}"
                     VerticalOptions="EndAndExpand"
-                    Margin="20, 20, 20, 20"
-                    IsEnabled="{Binding StartButtonEnabled} "/>
+                    Margin="20, 20, 20, 0"
+                    IsEnabled="{Binding StartTestButtonEnabled} "/>
+            <Button Text="Розпочати роботу над помилками"
+                    CornerRadius="20"
+                    Command="{Binding StartTestMistakesCorrectionCommand}"
+                    VerticalOptions="EndAndExpand"
+                    Margin="20, 0, 20, 20"
+                    IsEnabled="{Binding StartTestMistakesCorrectionButtonEnabled} "/>
                     
 
 
