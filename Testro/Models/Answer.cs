@@ -1,7 +1,4 @@
 ﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Testro.ViewModels;
 
 namespace Testro.Models
@@ -10,14 +7,14 @@ namespace Testro.Models
     {
         public readonly static long UNKNOWN_ID = -1;
 
-        public long AnswerId { get; set; } 
+        public long AnswerId { get; set; }
         public string AnswerText { get; set; }
 
         public static Answer CreateAnswer(BaseViewModel viewModel, long answerId)
         {
             Answer answer = new Answer();
 
-            if(answerId != UNKNOWN_ID)
+            if (answerId != UNKNOWN_ID)
             {
                 answer.AnswerId = answerId;
                 answer.AnswerText = viewModel.GetDataBaseRequestResult(answer.GetAnswerText);

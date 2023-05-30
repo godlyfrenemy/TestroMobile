@@ -1,9 +1,5 @@
 ﻿using MySqlConnector;
-using System;
-using System.Net.NetworkInformation;
-using System.Windows.Input;
 using Testro.Views;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Testro.ViewModels
@@ -38,8 +34,9 @@ namespace Testro.ViewModels
         public Command ScanQRCodeCommand { get; set; }
         public Command GoToTestCommand { get; set; }
 
-        public string ActiveTest {
-            get => _activeTest ; 
+        public string ActiveTest
+        {
+            get => _activeTest;
             set
             {
                 SetProperty(ref _activeTest, value);

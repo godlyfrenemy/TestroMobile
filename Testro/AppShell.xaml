@@ -30,7 +30,8 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Головна сторінка" Icon="main_page_icon.png" Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
+        <ShellContent Title="Головна" Icon="main_page_icon.png" Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
+        <ShellContent Title="Результати" Icon="results_icon.png" ContentTemplate="{DataTemplate local:UserTestingResultsPage}" />
         <ShellContent Title="Кабінет" Icon="cabinet_icon.png" ContentTemplate="{DataTemplate local:CabinetPage}" />
     </TabBar>
 

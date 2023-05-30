@@ -76,7 +76,7 @@
                    VerticalOptions="Start"
                    Grid.Row="2"/>
 
-            <ListView x:Name="MyListView"
+            <ListView x:Name="AnswersListView"
                       ItemsSource="{ Binding Answers }"
                       CachingStrategy="RecycleElement"
                       Margin="20, 40, 20, 0"

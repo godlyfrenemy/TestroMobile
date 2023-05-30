@@ -1,9 +1,6 @@
-﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using Testro.Models;
 using Xamarin.Forms;
 
@@ -11,33 +8,35 @@ namespace Testro.ViewModels
 {
     public class QuestionViewModel : BaseViewModel
     {
-
         static readonly TimeSpan SECOND = TimeSpan.FromSeconds(1);
+
         public ObservableCollection<Answer> Answers { get; set; }
         public Question Question { get; set; }
-        public int QuestionIndex {  get; set; }
+        public int QuestionIndex { get; set; }
         public string ContinueButtonText { get; private set; }
         public Command ContinueTestingCommand { get; private set; }
         public TestProcessViewModel TestProcessViewModel { get; set; }
         private int TestQuestionTime { get; set; }
 
         private bool _canSetAnwers = true;
-        public bool CanSetAnswers {
+        public bool CanSetAnswers
+        {
             get => _canSetAnwers;
             set
             {
-                if(_canSetAnwers)
+                if (_canSetAnwers)
                 {
                     SetProperty(ref _canSetAnwers, value);
 
-                    if(!value)
+                    if (!value)
                         QuestionTimeColor = Color.Red;
                 }
             }
         }
 
         private TimeSpan _timeToEndTest;
-        public TimeSpan TimeToEndTest {
+        public TimeSpan TimeToEndTest
+        {
             get => _timeToEndTest;
             private set { SetProperty(ref _timeToEndTest, value); }
         }
@@ -49,7 +48,8 @@ namespace Testro.ViewModels
         }
 
         private Color _questionTimeColor = (Color)Label.TextColorProperty.DefaultValue;
-        public Color QuestionTimeColor {
+        public Color QuestionTimeColor
+        {
             get => _questionTimeColor;
             set { SetProperty(ref _questionTimeColor, value); }
         }
@@ -75,13 +75,12 @@ namespace Testro.ViewModels
 
         private string GetContinueButtonText()
         {
-            return TestProcessViewModel.Test.Questions.Count - QuestionIndex > 1 ? 
-                    "Перейти до наступного запитання" : 
-                    "Завершити тестування";
+            long questionsLeft = TestProcessViewModel.Test.Questions.Count - QuestionIndex - 1;
+            return questionsLeft > 0 ? "Перейти до наступного запитання" : "Завершити тестування";
         }
 
         public void AddUserAnswer(object sender, EventArgs e)
-        {            
+        {
             Answer answer = (sender as ListView).SelectedItem as Answer;
             int answerTime = TestQuestionTime - (int)TimeToEndQuestion.TotalSeconds;
             UserAnswer userAnswer = new UserAnswer(Question.QuestionId, answer.AnswerId, answerTime);
@@ -90,23 +89,21 @@ namespace Testro.ViewModels
 
         private bool OnTimerTick()
         {
-            bool continueTimer = DateTime.Now < TestProcessViewModel.TestEndTime;
-
-            if (continueTimer)
+            if (DateTime.Now > TestProcessViewModel.TestEndTime)
             {
-                if (TestQuestionTime > 0)
-                {
-                    CanSetAnswers = TimeToEndQuestion > SECOND;
-                    TimeToEndQuestion = CanSetAnswers ? TimeToEndQuestion.Subtract(SECOND) : TimeSpan.Zero;
-                }
-
-                TimeSpan timeLeft = TestProcessViewModel.TestEndTime - DateTime.Now;
-                TimeToEndTest = new TimeSpan(timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
-            }
-            else
                 TestProcessViewModel.EndTesting();
-            
-            return continueTimer;
+                return false;
+            }
+
+            if (TestQuestionTime > 0 && CanSetAnswers)
+            {
+                CanSetAnswers = TimeToEndQuestion > SECOND;
+                TimeToEndQuestion = CanSetAnswers ? TimeToEndQuestion.Subtract(SECOND) : TimeSpan.Zero;
+            }
+
+            TimeSpan timeLeft = TestProcessViewModel.TestEndTime - DateTime.Now;
+            TimeToEndTest = new TimeSpan(timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+            return true;
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using Testro.Views;
+﻿using MySqlConnector;
+using Testro.Models;
+using Testro.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using MySqlConnector;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using ZXing;
-using Testro.Models;
 
 namespace Testro.ViewModels
 {
@@ -46,7 +42,7 @@ namespace Testro.ViewModels
         private long? AddNewUser(MySqlConnection connection)
         {
             string insertPupilDataQuery = "INSERT INTO pupils_data(`pupil_name`, `pupil_surname`) VALUES('" + UserName + "', '" + UserSurname + "')";
-            User.UserDataId = InsertValues(insertPupilDataQuery, connection);          
+            User.UserDataId = InsertValues(insertPupilDataQuery, connection);
             string insertPupilUsersQuery = "INSERT INTO pupil_users(`pupil_login`, `pupil_password`, `pupil_data_id`) VALUES('" + UserLogin + "', '" + GetHash(UserPassword) + "', '" + User.UserDataId + "')";
             return InsertValues(insertPupilUsersQuery, connection);
         }
@@ -108,7 +104,8 @@ namespace Testro.ViewModels
         }
 
         private string _userPassword = string.Empty;
-        public string UserPassword {
+        public string UserPassword
+        {
             get => _userPassword;
             set
             {

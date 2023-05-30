@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using Testro.Models;
+﻿using Testro.Models;
 using Testro.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Testro
 {
@@ -38,9 +35,8 @@ namespace Testro
 
         protected override void OnResume()
         {
-            if(IsOnTestingProcess)
+            if (IsOnTestingProcess)
             {
-                IsOnTestingProcess = false;
                 int index = Current.MainPage.Navigation.ModalStack.Count - 1;
                 Page currPage = Current.MainPage.Navigation.ModalStack[index];
                 (currPage as TestProcessPage).ForceEndTesting();

@@ -1,21 +1,13 @@
 ﻿using MySqlConnector;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Testro.Models;
-using Testro.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using ZXing;
 
 namespace Testro.ViewModels
 {
     public class CabinetViewModel : BaseViewModel
     {
-        
+
         public Command SignOutCommand { get; }
 
         public CabinetViewModel()

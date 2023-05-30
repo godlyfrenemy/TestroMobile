@@ -1,30 +1,42 @@
-﻿using System;
+﻿using MySqlConnector;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using MySqlConnector;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Testro.Models;
-using System.Runtime.ConstrainedExecution;
-using ZXing;
-using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace Testro.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        bool isBusy = false;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set { SetProperty(ref isBusy, value); }
+        }
+
+        string title = string.Empty;
+        public string Title
+        {
+            get { return title; }
+            set { SetProperty(ref title, value); }
+        }
+
         public void DisplayErrorAlert(string title)
         {
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 Shell.Current.DisplayAlert("Помилка!", title, "Окей");
             });
         }
         public void DisplaySuccessAlert(string title)
         {
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 Shell.Current.DisplayAlert("Успішно!", title, "Окей");
             });
         }
@@ -38,12 +50,12 @@ namespace Testro.ViewModels
             MySqlConnection connection = DataBaseConnectionInstance;
 
             T result = default;
-            try 
-            { 
-                result = function.Invoke(connection); 
-            } 
+            try
+            {
+                result = function.Invoke(connection);
+            }
             catch (Exception e)
-            { 
+            {
                 DisplayErrorAlert(e.Message);
             }
 
@@ -120,21 +132,6 @@ namespace Testro.ViewModels
             return command.ExecuteNonQuery() != 0;
         }
 
-
-        bool isBusy = false;
-        public bool IsBusy
-        {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
-        }
-
-        string title = string.Empty;
-        public string Title
-        {
-            get { return title; }
-            set { SetProperty(ref title, value); }
-        }
-
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
             Action onChanged = null)
@@ -152,7 +149,6 @@ namespace Testro.ViewModels
         {
             var md5 = MD5.Create();
             var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
- 
             return Convert.ToBase64String(hash);
         }
 
@@ -165,7 +161,8 @@ namespace Testro.ViewModels
             Database = "testro_db"
         };
 
-       static public MySqlConnection DataBaseConnectionInstance {
+        static public MySqlConnection DataBaseConnectionInstance
+        {
             get
             {
                 MySqlConnection _databaseConnection = new MySqlConnection(builder.ConnectionString);

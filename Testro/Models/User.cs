@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Essentials;
+﻿using Xamarin.Essentials;
 
 namespace Testro.Models
 {
     public class User
     {
-        public readonly static long UNKNOWN_ID = -1; 
+        public readonly static long UNKNOWN_ID = -1;
 
         private static long _userId = -1;
-        public static long UserId {
+        public static long UserId
+        {
             get => _userId;
-            set { 
+            set
+            {
                 _userId = value;
                 Preferences.Set("USER_ID", value);
-            } 
+            }
         }
         private static long _userDataId = -1;
         public static long UserDataId

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:Testro.ViewModels" 
+             x:Class="Testro.Views.UserTestingResultsPage">
+
+    <ContentPage.BindingContext>
+        <vm:UserTestingResultsViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Margin="20"> 
+        <Label Text="Ви ще не проходили жодних тестів"
+               FontSize="Large"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"
+               IsVisible="{Binding NoUserPassedTests}"/>
+        
+        <ListView x:Name="UserTestingResultsListView"
+                  ItemsSource="{Binding UserTestingResults}"
+                  CachingStrategy="RecycleElement"
+                  IsVisible="{Binding HasUserPassedTests}"
+                  VerticalOptions="CenterAndExpand"
+                  HorizontalOptions="CenterAndExpand">
+
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+    </StackLayout>
+    
+</ContentPage>

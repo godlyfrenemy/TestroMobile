@@ -1,10 +1,6 @@
 ﻿using MySqlConnector;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using Testro.ViewModels;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Testro.Models
 {
@@ -67,7 +63,8 @@ namespace Testro.Models
         public TestData TestData { get; set; } = new TestData();
 
         private string _testName = string.Empty;
-        public string TestName {
+        public string TestName
+        {
             get => _testName;
             set
             {
@@ -110,8 +107,8 @@ namespace Testro.Models
 
         protected virtual List<Question> GetQuestions(BaseViewModel viewModel, bool withMistakesOnly)
         {
-            List<long> questionIds = withMistakesOnly ? 
-                                    viewModel.GetDataBaseRequestResult(GetTestQuestionIdsWithMistakes) : 
+            List<long> questionIds = withMistakesOnly ?
+                                    viewModel.GetDataBaseRequestResult(GetTestQuestionIdsWithMistakes) :
                                     viewModel.GetDataBaseRequestResult(GetTestQuestionIds);
             List<Question> questions = new List<Question>();
 

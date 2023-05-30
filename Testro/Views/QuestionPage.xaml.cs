@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Testro.Models;
 using Testro.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,20 +14,20 @@ namespace Testro.Views
             InitializeComponent();
             BindingContext = new QuestionViewModel(testViewModel, questionIndex);
 
-            if(testViewModel.Test.TestData.TestQuestionTimeConstraint == 0)
+            if (testViewModel.Test.TestData.TestQuestionTimeConstraint == 0)
                 TestTimeInfo.Children.RemoveAt(1);
         }
 
         public void Handle_ItemTapped(object sender, EventArgs e)
         {
-            if(LastSelectedViewCell != null)
+            if (LastSelectedViewCell != null)
                 LastSelectedViewCell.View.BackgroundColor = Color.Transparent;
 
             LastSelectedViewCell = ((ViewCell)sender);
             LastSelectedViewCell.View.BackgroundColor = Color.LightBlue;
 
             QuestionViewModel questionViewModel = BindingContext as QuestionViewModel;
-            questionViewModel.AddUserAnswer(MyListView, e);
+            questionViewModel.AddUserAnswer(AnswersListView, e);
         }
 
         protected override void OnAppearing()

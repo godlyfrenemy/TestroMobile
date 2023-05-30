@@ -706,3 +706,4 @@ C:\Users\lenovo\source\repos\Testro\Testro\Testro.Android\obj\Debug\130\androidx
 C:\Users\lenovo\source\repos\Testro\Testro\Testro.Android\obj\Debug\130\androidx\proguard\de822557-33ac-4581-a976-45562f187f1d.txt
 C:\Users\lenovo\source\repos\Testro\Testro\Testro.Android\obj\Debug\130\androidx\proguard\ebe6f794-dbd2-49b9-ae29-f89cec0bdaa3.txt
 C:\Users\lenovo\source\repos\Testro\Testro\Testro.Android\obj\Debug\130\androidx\proguard\fecb2342-b3b6-4e26-bb88-501ee83e793d.txt
+C:\Users\lenovo\source\repos\Testro\Testro\Testro.Android\obj\Debug\130\res\drawable\results_icon.png

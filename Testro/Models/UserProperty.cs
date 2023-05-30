@@ -1,7 +1,4 @@
 ﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Testro.ViewModels;
 using Xamarin.Forms;
 

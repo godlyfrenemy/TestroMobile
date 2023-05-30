@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Testro.ViewModels;
+﻿using Testro.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Testro.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TestPage : ContentPage
-	{
-		public TestPage (long testId)
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class TestPage : ContentPage
+    {
+        public TestPage(long testId)
+        {
+            InitializeComponent();
             BindingContext = new TestProcessViewModel(testId);
         }
 

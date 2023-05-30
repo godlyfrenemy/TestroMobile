@@ -1,8 +1,6 @@
 ﻿using MySqlConnector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Testro.Models;
 using Testro.Views;
 using Xamarin.Forms;
@@ -11,7 +9,7 @@ namespace Testro.ViewModels
 {
     public class TestProcessViewModel : TestViewModel
     {
-        public TestProcessViewModel(long testId, bool withMistakesOnly = false) : base(testId, withMistakesOnly) {}
+        public TestProcessViewModel(long testId, bool withMistakesOnly = false) : base(testId, withMistakesOnly) { }
 
         public int CurrentQuestionIndex { get; set; } = 0;
         public TestProcessPage TestProcessPage { get; set; }
@@ -33,7 +31,7 @@ namespace Testro.ViewModels
             bool isOk = true;
 
             UserAnswers.ForEach(x =>
-            {            
+            {
                 string insertQuestionResultsQuery = "INSERT INTO question_results(`question_id`, `result_answer_id`, `answer_time`) " +
                                                     "VALUES('" + x.QuestionId + "', '" + x.AnswerId + "', '" + x.AnswerTime + "')";
                 long questionResultsId = InsertValues(insertQuestionResultsQuery, connection);
@@ -54,13 +52,13 @@ namespace Testro.ViewModels
 
         public void ContinueTesting()
         {
-            if(IsCurrentPageLast())
+            if (IsCurrentPageLast())
                 EndTesting();
             else
                 TestProcessPage.CurrentPage = TestProcessPage.Children[++CurrentQuestionIndex];
         }
 
-        public virtual void EndTesting(bool writeEmpty = false)
+        public virtual void WriteResults(bool writeEmpty = false)
         {
             if (writeEmpty)
             {
@@ -74,9 +72,15 @@ namespace Testro.ViewModels
 
             if (!(GetDataBaseRequestResult(WriteTestingResults) ?? false))
                 DisplayErrorAlert("Не вдається записати результат!");
+        }
+
+        public void EndTesting(bool writeEmpty = false)
+        {
+            WriteResults(writeEmpty);
 
             App.IsOnTestingProcess = false;
             Application.Current.MainPage.Navigation.PopModalAsync();
+            Application.Current.MainPage.Navigation.PushModalAsync(new TestResultsPage(Test.TestId));
         }
 
         public bool IsCurrentPageLast()

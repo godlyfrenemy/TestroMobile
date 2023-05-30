@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Net.NetworkInformation;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace Testro.Views
 {
@@ -10,7 +6,7 @@ namespace Testro.Views
     {
         public MainPage()
         {
-            InitializeComponent();          
+            InitializeComponent();
         }
     }
 }

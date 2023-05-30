@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Testro.ViewModels;
-using Testro.Views;
+﻿using Testro.Views;
 using Xamarin.Forms;
 
 namespace Testro
@@ -16,6 +13,7 @@ namespace Testro
             Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
             Routing.RegisterRoute(nameof(CabinetPage), typeof(CabinetPage));
             Routing.RegisterRoute(nameof(TestPage), typeof(TestPage));
+            Routing.RegisterRoute(nameof(UserTestingResultsPage), typeof(UserTestingResultsPage));
         }
 
     }

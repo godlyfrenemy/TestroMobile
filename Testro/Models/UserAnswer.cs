@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Testro.Models
+﻿namespace Testro.Models
 {
     public class UserAnswer
     {

@@ -1,10 +1,5 @@
 ﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Testro.Models;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace Testro.ViewModels
 {
@@ -19,7 +14,7 @@ namespace Testro.ViewModels
             return UpdateValues(updateTestCompletionQuery, connection);
         }
 
-        public override void EndTesting(bool writeEmpty = false)
+        public override void WriteResults(bool writeEmpty = false)
         {
             if (writeEmpty)
             {
@@ -27,11 +22,7 @@ namespace Testro.ViewModels
                 UserAnswers.Clear();
             }
 
-            if (!(GetDataBaseRequestResult(WriteTestingResults) ?? false))
-                DisplayErrorAlert("Не вдається записати результат!");
-
-            App.IsOnTestingProcess = false;
-            Application.Current.MainPage.Navigation.PopModalAsync();
+            base.WriteResults();
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using Testro.Views;
-using Xamarin.Essentials;
-using Xamarin.Forms;
-using MySqlConnector;
-using System;
-using System.Linq;
+﻿using MySqlConnector;
 using System.Threading.Tasks;
-using ZXing;
 using Testro.Models;
+using Testro.Views;
+using Xamarin.Forms;
 
 namespace Testro.ViewModels
 {
@@ -80,7 +76,8 @@ namespace Testro.ViewModels
         }
 
         private string _userPassword = string.Empty;
-        public string UserPassword {
+        public string UserPassword
+        {
             get => _userPassword;
             set
             {
@@ -90,12 +87,13 @@ namespace Testro.ViewModels
         }
 
         private string _errorText = string.Empty;
-        public string ErrorText {
+        public string ErrorText
+        {
             get => _errorText;
             set
             {
                 SetProperty(ref _errorText, value.Trim());
-            } 
+            }
         }
 
         private bool _loginButtonEnabled = false;

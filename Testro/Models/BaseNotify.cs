@@ -1,10 +1,7 @@
-﻿using MySqlConnector;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using Testro.ViewModels;
 
 namespace Testro.Models
 {

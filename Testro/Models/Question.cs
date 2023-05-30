@@ -1,8 +1,6 @@
 ﻿using MySqlConnector;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using Testro.ViewModels;
 
 namespace Testro.Models
@@ -12,7 +10,7 @@ namespace Testro.Models
         public readonly static long UNKNOWN_ID = -1;
 
         public long QuestionId { get; set; } = UNKNOWN_ID;
-        public string QuestionName { get; set; } = string.Empty; 
+        public string QuestionName { get; set; } = string.Empty;
         public long CorrectAnswerId { get; set; } = UNKNOWN_ID;
         public long QuestionResultId { get; set; } = UNKNOWN_ID;
         public ObservableCollection<Answer> Answers { get; set; }
@@ -21,7 +19,7 @@ namespace Testro.Models
         {
             Question question = new Question();
 
-            if(questionId != UNKNOWN_ID)
+            if (questionId != UNKNOWN_ID)
             {
                 question.QuestionId = questionId;
                 question.QuestionName = viewModel.GetDataBaseRequestResult(question.GetQuestionName);
