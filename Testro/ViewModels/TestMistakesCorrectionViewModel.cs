@@ -6,6 +6,7 @@ namespace Testro.ViewModels
     public class TestMistakesCorrectionViewModel : TestProcessViewModel
     {
         public TestMistakesCorrectionViewModel(long testId) : base(testId, true) { }
+        public TestMistakesCorrectionViewModel(Test test) : base(test) { }
 
         protected override bool WriteCompletionTimes(MySqlConnection connection)
         {

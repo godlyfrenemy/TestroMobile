@@ -10,14 +10,14 @@ namespace Testro.Models
         public long AnswerId { get; set; }
         public string AnswerText { get; set; }
 
-        public static Answer CreateAnswer(BaseViewModel viewModel, long answerId)
+        public static Answer CreateAnswer(long answerId)
         {
             Answer answer = new Answer();
 
             if (answerId != UNKNOWN_ID)
             {
                 answer.AnswerId = answerId;
-                answer.AnswerText = viewModel.GetDataBaseRequestResult(answer.GetAnswerText);
+                answer.AnswerText = BaseViewModel.GetDataBaseRequestResult(answer.GetAnswerText);
             }
 
             return answer;

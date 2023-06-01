@@ -8,14 +8,14 @@ namespace Testro.Views
     public partial class QRCodeScannerPage : ContentPage
     {
         protected MainPageViewModel MainPageViewModel { get; set; }
-        public QRCodeScannerPage(MainPageViewModel mainPage)
+        public QRCodeScannerPage(MainPageViewModel mainPageViewModel)
         {
             InitializeComponent();
-            MainPageViewModel = mainPage;
+            MainPageViewModel = mainPageViewModel;
             zxing.OnScanResult += (result) => Device.BeginInvokeOnMainThread(() =>
             {
                 MainPageViewModel.ActiveTest = result.Text;
-                Application.Current.MainPage.Navigation.PopModalAsync();
+                MainPageViewModel.PopModalAsync();
             });
         }
 

@@ -15,12 +15,12 @@ namespace Testro.ViewModels
 
         protected async void OnScanQRCodeClicked()
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new QRCodeScannerPage(this));
+            await PushModalAsync(new QRCodeScannerPage(this));
         }
         protected async void OnGoToTestClicked()
         {
             if (GetDataBaseRequestResult(CheckIfTestExists) ?? false)
-                await Application.Current.MainPage.Navigation.PushModalAsync(new TestPage(long.Parse(ActiveTest)));
+                await PushModalAsync(new TestPage(long.Parse(ActiveTest)));
             else
                 DisplayErrorAlert("Такий тест не існує!");
         }

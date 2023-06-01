@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Testro.Views;
 using Xamarin.Forms;
 
 namespace Testro.ViewModels
@@ -26,26 +27,37 @@ namespace Testro.ViewModels
             set { SetProperty(ref title, value); }
         }
 
-        public void DisplayErrorAlert(string title)
+        public static void DisplayErrorAlert(string title)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 Shell.Current.DisplayAlert("Помилка!", title, "Окей");
             });
         }
-        public void DisplaySuccessAlert(string title)
+        public static void DisplaySuccessAlert(string title)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 Shell.Current.DisplayAlert("Успішно!", title, "Окей");
             });
         }
-        public async Task<bool> DisplayConfirmAlert(string title, string message, string accept = "Так", string cancel = "Ні")
+
+        public static Task PushModalAsync(Page page)
         {
-            return await Shell.Current.DisplayAlert(title, message, accept, cancel);
+            return Application.Current.MainPage.Navigation.PushModalAsync(page);
         }
 
-        public T GetDataBaseRequestResult<T>(Func<MySqlConnection, T> function)
+        public static Task<Page> PopModalAsync()
+        {
+            return Application.Current.MainPage.Navigation.PopModalAsync();
+        }
+
+        public static Task<bool> DisplayConfirmAlert(string title, string message, string accept = "Так", string cancel = "Ні")
+        {
+            return Shell.Current.DisplayAlert(title, message, accept, cancel);
+        }
+
+        public static T GetDataBaseRequestResult<T>(Func<MySqlConnection, T> function)
         {
             MySqlConnection connection = DataBaseConnectionInstance;
 

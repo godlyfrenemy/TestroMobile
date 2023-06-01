@@ -9,9 +9,8 @@ namespace Testro.Models
         public Command ModifyValueCommand { get; }
         public Command SaveLastValueCommand { get; }
 
-        public UserProperty(BaseViewModel viewModel, string fieldNameForUser, string dataBaseFieldName) : base()
+        public UserProperty(string fieldNameForUser, string dataBaseFieldName) : base()
         {
-            _viewModel = viewModel;
             _dataBaseFieldName = dataBaseFieldName;
             _fieldNameForUser = fieldNameForUser;
             ModifyValueCommand = new Command(PropertyUnfocused);
@@ -31,13 +30,13 @@ namespace Testro.Models
         }
         public void PropertyUnfocused()
         {
-            if (!(_viewModel.GetDataBaseRequestResult(ChangePropertyValueInDataBase) ?? false))
+            if (!(BaseViewModel.GetDataBaseRequestResult(ChangePropertyValueInDataBase) ?? false))
             {
-                _viewModel.DisplayErrorAlert("Поле '" + _fieldNameForUser + "' не було змінене!");
+                BaseViewModel.DisplayErrorAlert("Поле '" + _fieldNameForUser + "' не було змінене!");
                 PropertyValue = _lastValue;
             }
             else if (_lastValue != PropertyValue)
-                _viewModel.DisplaySuccessAlert("Поле '" + _fieldNameForUser + "' успішно змінене!");
+                BaseViewModel.DisplaySuccessAlert("Поле '" + _fieldNameForUser + "' успішно змінене!");
         }
 
         private bool? ChangePropertyValueInDataBase(MySqlConnection connection)
@@ -47,7 +46,6 @@ namespace Testro.Models
             return BaseViewModel.ChangedRows(query, connection);
         }
 
-        private readonly BaseViewModel _viewModel;
         private readonly string _dataBaseFieldName;
         private readonly string _fieldNameForUser;
 

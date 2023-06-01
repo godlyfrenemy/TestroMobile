@@ -15,16 +15,16 @@ namespace Testro.Models
         public long QuestionResultId { get; set; } = UNKNOWN_ID;
         public ObservableCollection<Answer> Answers { get; set; }
 
-        public static Question CreateQuestion(BaseViewModel viewModel, long questionId)
+        public static Question CreateQuestion(long questionId)
         {
             Question question = new Question();
 
             if (questionId != UNKNOWN_ID)
             {
                 question.QuestionId = questionId;
-                question.QuestionName = viewModel.GetDataBaseRequestResult(question.GetQuestionName);
-                question.CorrectAnswerId = viewModel.GetDataBaseRequestResult(question.GetCorrectAnswerId) ?? UNKNOWN_ID;
-                question.Answers = question.GetAnswers(viewModel);
+                question.QuestionName = BaseViewModel.GetDataBaseRequestResult(question.GetQuestionName);
+                question.CorrectAnswerId = BaseViewModel.GetDataBaseRequestResult(question.GetCorrectAnswerId) ?? UNKNOWN_ID;
+                question.Answers = question.GetAnswers();
             }
 
             return question;
@@ -42,14 +42,14 @@ namespace Testro.Models
             return BaseViewModel.GetFirstValue<long>(query, connection, "correct_answer_id");
         }
 
-        protected ObservableCollection<Answer> GetAnswers(BaseViewModel viewModel)
+        protected ObservableCollection<Answer> GetAnswers()
         {
-            List<long> answerIds = viewModel.GetDataBaseRequestResult(GetQuestionAnswerIds);
+            List<long> answerIds = BaseViewModel.GetDataBaseRequestResult(GetQuestionAnswerIds);
             ObservableCollection<Answer> answers = new ObservableCollection<Answer>();
 
             answerIds.ForEach(delegate (long answerId)
             {
-                answers.Add(Answer.CreateAnswer(viewModel, answerId));
+                answers.Add(Answer.CreateAnswer(answerId));
             });
 
             return answers;

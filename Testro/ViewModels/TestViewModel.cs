@@ -31,6 +31,13 @@ namespace Testro.ViewModels
             StartTestMistakesCorrectionCommand = new Command(OnStartTestMistakesCorrectionClicked);
         }
 
+        public TestViewModel(Test test)
+            : base(test)
+        {
+            StartTestCommand = new Command(OnStartTestClicked);
+            StartTestMistakesCorrectionCommand = new Command(OnStartTestMistakesCorrectionClicked);
+        }
+
         public void OnAppearing()
         {
             StartTestButtonEnabled = GetDataBaseRequestResult(HasUserAccessToTest);
@@ -39,13 +46,12 @@ namespace Testro.ViewModels
 
         private async void OnStartTestClicked()
         {
-            await Application.Current.MainPage.Navigation.PushModalAsync(new TestProcessPage(this));
+            await PushModalAsync(new TestProcessPage(this));
         }
 
         private async void OnStartTestMistakesCorrectionClicked()
         {
-            TestMistakesCorrectionViewModel viewModel = new TestMistakesCorrectionViewModel(Test.TestId);
-            await Application.Current.MainPage.Navigation.PushModalAsync(new TestProcessPage(viewModel));
+            await PushModalAsync(new TestProcessPage(new TestMistakesCorrectionViewModel(Test)));
         }
 
         private bool HasUserAccessToTest(MySqlConnection connection)

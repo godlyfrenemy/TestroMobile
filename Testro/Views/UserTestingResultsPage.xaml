@@ -1,38 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:vm="clr-namespace:Testro.ViewModels" 
              x:Class="Testro.Views.UserTestingResultsPage">
-
-    <ContentPage.BindingContext>
-        <vm:UserTestingResultsViewModel />
-    </ContentPage.BindingContext>
-
-    <StackLayout Margin="20"> 
-        <Label Text="Ви ще не проходили жодних тестів"
+    
+    <ScrollView>
+        <StackLayout Margin="20">
+            <Label Text="Ви ще не проходили жодних тестів"
                FontSize="Large"
                VerticalOptions="CenterAndExpand"
                HorizontalOptions="CenterAndExpand"
                IsVisible="{Binding NoUserPassedTests}"/>
-        
-        <ListView x:Name="UserTestingResultsListView"
-                  ItemsSource="{Binding UserTestingResults}"
-                  CachingStrategy="RecycleElement"
-                  IsVisible="{Binding HasUserPassedTests}"
-                  VerticalOptions="CenterAndExpand"
-                  HorizontalOptions="CenterAndExpand">
 
+            <StackLayout IsVisible="{Binding HasUserPassedTests}"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand">
+                
+                <Grid>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
 
-        </ListView>
-    </StackLayout>
+                    <Label Text="Назва"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       Grid.Column="0"                        
+                       Grid.Row="0"
+                       HorizontalTextAlignment="Center"/>
+                    <Label Text="Результати"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       Grid.Column="1"
+                       Grid.Row="0"
+                       HorizontalTextAlignment="Center"/>
+                </Grid>
+
+                <BoxView HeightRequest="2" 
+                     Color="DarkGray"
+                     IsVisible="True"/>
+
+                <ListView x:Name="UserTestingResultsListView"
+                          ItemsSource="{Binding UserTestingResults}"
+                          CachingStrategy="RecycleElement"
+                          HasUnevenRows="True">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Tapped="Handle_ItemTapped">
+                                <StackLayout>
+                                    <Grid VerticalOptions="CenterAndExpand">
+                                        
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Text="{Binding Test.TestName }"
+                                               FontSize="20"
+                                               Grid.Column="0"
+                                               VerticalTextAlignment="Center"
+                                               VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding CorrectAnswersToTotal }"
+                                               FontSize="20"
+                                               Grid.Column="1"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding TotalMark }"
+                                               FontSize="20"
+                                               Grid.Column="2"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                    </Grid>
+
+                                    <BoxView HeightRequest="1"
+                                             Color="LightGray"
+                                             IsVisible="True"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+    
     
 </ContentPage>

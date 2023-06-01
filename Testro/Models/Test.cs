@@ -14,17 +14,17 @@ namespace Testro.Models
         public long TestTypeConstraintId { get; private set; } = UNKNOWN_ID;
         public string TestTypeName { get; private set; }
 
-        public static TestData CreateTestData(BaseViewModel viewModel, long testDataId)
+        public static TestData CreateTestData(long testDataId)
         {
             TestData testData = new TestData();
 
             if (testDataId != UNKNOWN_ID)
             {
                 testData.TestDataId = testDataId;
-                testData.TestTimeConstraint = viewModel.GetDataBaseRequestResult(testData.GetTimeConstraintValue) ?? 0;
-                testData.TestQuestionTimeConstraint = viewModel.GetDataBaseRequestResult(testData.GetQuestionTimeConstraintValue) ?? 0;
-                testData.TestTypeConstraintId = viewModel.GetDataBaseRequestResult(testData.GetTypeConstraintValue) ?? UNKNOWN_ID;
-                testData.TestTypeName = viewModel.GetDataBaseRequestResult(testData.GetTypeConstraintName);
+                testData.TestTimeConstraint = BaseViewModel.GetDataBaseRequestResult(testData.GetTimeConstraintValue) ?? 0;
+                testData.TestQuestionTimeConstraint = BaseViewModel.GetDataBaseRequestResult(testData.GetQuestionTimeConstraintValue) ?? 0;
+                testData.TestTypeConstraintId = BaseViewModel.GetDataBaseRequestResult(testData.GetTypeConstraintValue) ?? UNKNOWN_ID;
+                testData.TestTypeName = BaseViewModel.GetDataBaseRequestResult(testData.GetTypeConstraintName);
             }
 
             return testData;
@@ -72,18 +72,21 @@ namespace Testro.Models
             }
         }
 
+        public int TestMark { get; set; }
+
         public List<Question> Questions { get; set; }
 
-        public static Test CreateTest(BaseViewModel viewModel, long testId, bool withMistakesOnly)
+        public static Test CreateTest(long testId, bool withMistakesOnly = false)
         {
             Test test = new Test();
 
             if (testId != UNKNOWN_ID)
             {
                 test.TestId = testId;
-                test.TestName = viewModel.GetDataBaseRequestResult(test.GetTestName);
-                test.TestData = test.GetTestData(viewModel);
-                test.Questions = test.GetQuestions(viewModel, withMistakesOnly);
+                test.TestMark = BaseViewModel.GetDataBaseRequestResult(test.GetTestMark);
+                test.TestName = BaseViewModel.GetDataBaseRequestResult(test.GetTestName);
+                test.TestData = test.GetTestData();
+                test.Questions = test.GetQuestions(withMistakesOnly);
             }
             return test;
         }
@@ -99,22 +102,28 @@ namespace Testro.Models
             return BaseViewModel.GetFirstValue<string>(query, connection, "test_name");
         }
 
-        protected TestData GetTestData(BaseViewModel viewModel)
+        protected int GetTestMark(MySqlConnection connection)
         {
-            long testDataId = viewModel.GetDataBaseRequestResult(GetTestDataId) ?? UNKNOWN_ID;
-            return TestData.CreateTestData(viewModel, testDataId);
+            string query = "SELECT * FROM `tests` WHERE `test_id` = '" + TestId + "'";
+            return BaseViewModel.GetFirstValue<int>(query, connection, "test_mark");
         }
 
-        protected virtual List<Question> GetQuestions(BaseViewModel viewModel, bool withMistakesOnly)
+        protected TestData GetTestData()
+        {
+            long testDataId = BaseViewModel.GetDataBaseRequestResult(GetTestDataId) ?? UNKNOWN_ID;
+            return TestData.CreateTestData(testDataId);
+        }
+
+        protected virtual List<Question> GetQuestions(bool withMistakesOnly)
         {
             List<long> questionIds = withMistakesOnly ?
-                                    viewModel.GetDataBaseRequestResult(GetTestQuestionIdsWithMistakes) :
-                                    viewModel.GetDataBaseRequestResult(GetTestQuestionIds);
+                                    BaseViewModel.GetDataBaseRequestResult(GetTestQuestionIdsWithMistakes) :
+                                    BaseViewModel.GetDataBaseRequestResult(GetTestQuestionIds);
             List<Question> questions = new List<Question>();
 
             questionIds.ForEach(delegate (long questionId)
             {
-                questions.Add(Question.CreateQuestion(viewModel, questionId));
+                questions.Add(Question.CreateQuestion(questionId));
             });
 
             return questions;

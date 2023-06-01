@@ -10,6 +10,7 @@ namespace Testro.ViewModels
     public class TestProcessViewModel : TestViewModel
     {
         public TestProcessViewModel(long testId, bool withMistakesOnly = false) : base(testId, withMistakesOnly) { }
+        public TestProcessViewModel(Test test) : base(test) { }
 
         public int CurrentQuestionIndex { get; set; } = 0;
         public TestProcessPage TestProcessPage { get; set; }
@@ -79,8 +80,8 @@ namespace Testro.ViewModels
             WriteResults(writeEmpty);
 
             App.IsOnTestingProcess = false;
-            Application.Current.MainPage.Navigation.PopModalAsync();
-            Application.Current.MainPage.Navigation.PushModalAsync(new TestResultsPage(Test.TestId));
+            PopModalAsync();
+            PushModalAsync(new TestResultsPage(Test.TestId));
         }
 
         public bool IsCurrentPageLast()

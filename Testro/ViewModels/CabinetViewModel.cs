@@ -14,9 +14,9 @@ namespace Testro.ViewModels
         {
             Title = "Кабінет користувача";
             SignOutCommand = new Command(OnSignOutClicked);
-            UserName = new UserProperty(this, "ім'я", "pupil_name");
-            UserSurname = new UserProperty(this, "прізвище", "pupil_surname");
-            UserForm = new UserProperty(this, "клас", "pupil_form");
+            UserName = new UserProperty("ім'я", "pupil_name");
+            UserSurname = new UserProperty("прізвище", "pupil_surname");
+            UserForm = new UserProperty("клас", "pupil_form");
         }
 
         public void OnAppearing()

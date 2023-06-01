@@ -16,7 +16,7 @@
                    FontSize="Large"
                    VerticalOptions="Center"
                    HorizontalOptions="CenterAndExpand" />
-                <Label Text="{Binding CorrectAnswersToTotal}"
+                <Label Text="{Binding UserTestingResult.CorrectAnswersToTotal}"
                    FontSize="80"
                    VerticalOptions="Center"
                    HorizontalOptions="CenterAndExpand" />
@@ -26,7 +26,7 @@
                    FontSize="Large"
                    VerticalOptions="Center"
                    HorizontalOptions="CenterAndExpand" />
-                <Label Text="{Binding TotalMark}"
+                <Label Text="{Binding UserTestingResult.TotalMark}"
                    FontSize="140"
                    VerticalOptions="Center"
                    HorizontalOptions="CenterAndExpand" />

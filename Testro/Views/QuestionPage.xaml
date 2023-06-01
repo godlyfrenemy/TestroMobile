@@ -82,7 +82,8 @@
                       Margin="20, 40, 20, 0"
                       Grid.Row="2"
                       VerticalOptions="CenterAndExpand"
-                      IsEnabled="{ Binding CanSetAnswers }">
+                      IsEnabled="{ Binding CanSetAnswers }"
+                      HasUnevenRows="True">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -92,7 +93,7 @@
                                        FontSize="Large" 
                                        Padding="10, 10, 10, 10" 
                                        VerticalTextAlignment="Center"
-                                       VerticalOptions="Center"/>
+                                       VerticalOptions="CenterAndExpand"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
