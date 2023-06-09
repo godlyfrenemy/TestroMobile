@@ -13,8 +13,7 @@ namespace Testro.ViewModels
         public ObservableCollection<Answer> Answers { get; set; }
         public Question Question { get; set; }
         public int QuestionIndex { get; set; }
-        public string ContinueButtonText { get; private set; }
-        public Command ContinueTestingCommand { get; private set; }
+        public Command EndTestingCommand { get; private set; }
         public TestProcessViewModel TestProcessViewModel { get; set; }
         private int TestQuestionTime { get; set; }
 
@@ -33,6 +32,8 @@ namespace Testro.ViewModels
                 }
             }
         }
+
+        public bool startedClockDown = false;
 
         private TimeSpan _timeToEndTest;
         public TimeSpan TimeToEndTest
@@ -54,15 +55,20 @@ namespace Testro.ViewModels
             set { SetProperty(ref _questionTimeColor, value); }
         }
 
+        private bool _hasImage = false;
+        public bool HasImage { get => _hasImage; set => SetProperty(ref _hasImage, value); }
+
         public QuestionViewModel(TestProcessViewModel testViewModel, int questionIndex)
         {
             TestProcessViewModel = testViewModel;
             Question = TestProcessViewModel.Test.Questions.ElementAt(questionIndex);
             QuestionIndex = questionIndex;
             Answers = Question.Answers;
-            Title = "Запитання №" + (QuestionIndex + 1).ToString();
-            ContinueButtonText = GetContinueButtonText();
-            ContinueTestingCommand = new Command(TestProcessViewModel.ContinueTesting);
+
+            HasImage = Question.HasImage;
+
+            EndTestingCommand = new Command(() => TestProcessViewModel.SetEndTest());
+            Title = "Запитання " + (QuestionIndex + 1).ToString() + " / " + testViewModel.Test.Questions.Count().ToString();
 
             TestQuestionTime = (int)testViewModel.Test.TestData.TestQuestionTimeConstraint;
             TimeToEndQuestion = new TimeSpan(0, 0, TestQuestionTime);
@@ -70,13 +76,7 @@ namespace Testro.ViewModels
 
         public void OnPageAppearing()
         {
-            Device.StartTimer(SECOND, OnTimerTick);
-        }
-
-        private string GetContinueButtonText()
-        {
-            long questionsLeft = TestProcessViewModel.Test.Questions.Count - QuestionIndex - 1;
-            return questionsLeft > 0 ? "Перейти до наступного запитання" : "Завершити тестування";
+            startedClockDown = true;
         }
 
         public void AddUserAnswer(object sender, EventArgs e)
@@ -87,13 +87,10 @@ namespace Testro.ViewModels
             TestProcessViewModel.AddUserAnswer(QuestionIndex, userAnswer);
         }
 
-        private bool OnTimerTick()
+        public void OnTimerTick()
         {
-            if (DateTime.Now > TestProcessViewModel.TestEndTime)
-            {
-                TestProcessViewModel.EndTesting();
-                return false;
-            }
+            if (!startedClockDown)
+                return;
 
             if (TestQuestionTime > 0 && CanSetAnswers)
             {
@@ -103,7 +100,6 @@ namespace Testro.ViewModels
 
             TimeSpan timeLeft = TestProcessViewModel.TestEndTime - DateTime.Now;
             TimeToEndTest = new TimeSpan(timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
-            return true;
         }
     }
 }

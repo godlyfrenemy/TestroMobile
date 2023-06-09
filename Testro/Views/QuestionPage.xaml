@@ -1,26 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Testro.Views.QuestionPage"
-             Title="{Binding Title}">
+             x:Class="Testro.Views.QuestionPage">
 
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
-
+        <StackLayout VerticalOptions="Fill">
+            <Label Text="{Binding Title }"
+                   FontSize="Large"
+                   HorizontalOptions="CenterAndExpand"
+                   Margin="10"/>
+            
             <Grid BackgroundColor="Black"
-                  Grid.Row="0"
                   Margin="0, 0, 0, 10"
                   x:Name="TestTimeInfo"
                   RowSpacing="1">
+                
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid BackgroundColor="AliceBlue"
                       Grid.Row="0">
@@ -32,7 +29,8 @@
                             FontSize="16"
                             Grid.Column="0"
                             HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center"/>
+                            VerticalTextAlignment="Center"
+                            VerticalOptions="CenterAndExpand"/>
                     <Label  Text="{Binding TimeToEndTest }"
                             FontSize="Large" 
                             Grid.Column="1"
@@ -61,53 +59,71 @@
                 </Grid>
             </Grid>
 
-            
+            <ScrollView>
+                
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Text="{Binding Question.QuestionName }"
+                           FontSize="Large"
+                           HorizontalOptions="Center"
+                           Margin="20"
+                           Grid.Row="0"/>
 
-            <Label Text="{Binding Question.QuestionName }"
-                   FontSize="Large"
-                   HorizontalOptions="CenterAndExpand"
-                   Grid.Row="1"
-                   VerticalOptions="Start"
-                   Margin="20, 0, 20, 0"/>
+                    <Image x:Name="IncidentImageData"
+                           BackgroundColor="DarkGray" 
+                           Aspect="AspectFill" 
+                           WidthRequest="50" 
+                           HeightRequest="175"
+                           Grid.Row="1"
+                           Source="{Binding Question.QuestionImageResource}"/>
 
-            <Label Text="Варіанти відповіді"
-                   FontSize="Large"
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="Start"
-                   Grid.Row="2"/>
+                    <Label Text="Варіанти відповіді"
+                           FontSize="Large"
+                           HorizontalOptions="Center"
+                           Margin="20"
+                           Grid.Row="2"/>
 
-            <ListView x:Name="AnswersListView"
-                      ItemsSource="{ Binding Answers }"
-                      CachingStrategy="RecycleElement"
-                      Margin="20, 40, 20, 0"
-                      Grid.Row="2"
-                      VerticalOptions="CenterAndExpand"
-                      IsEnabled="{ Binding CanSetAnswers }"
-                      HasUnevenRows="True">
+                    <ListView x:Name="AnswersListView"
+                              ItemsSource="{ Binding Answers }"
+                              CachingStrategy="RecycleElement"
+                              Margin="20"
+                              IsEnabled="{ Binding CanSetAnswers }"
+                              HasUnevenRows="True"
+                              Grid.Row="3"
+                              HeightRequest="300">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Tapped="Handle_ItemTapped">
-                            <StackLayout>
-                                <Label Text="{ Binding AnswerText }" 
-                                       FontSize="Large" 
-                                       Padding="10, 10, 10, 10" 
-                                       VerticalTextAlignment="Center"
-                                       VerticalOptions="CenterAndExpand"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell Tapped="Handle_ItemTapped">
+                                    <StackLayout>
+                                        <Label Text="{ Binding AnswerText }" 
+                                            FontSize="Large" 
+                                            Padding="10, 10, 10, 10" 
+                                            VerticalTextAlignment="Center"
+                                            VerticalOptions="CenterAndExpand"
+                                            />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
 
-            </ListView>
-
-            <Button Text="{Binding ContinueButtonText}"
+                    </ListView>
+                </Grid>
+            </ScrollView>
+            <Button Text="Завершити тестування"
                     CornerRadius="20"
-                    Command="{Binding ContinueTestingCommand}"
-                    VerticalOptions="EndAndExpand"
-                    Grid.Row="3"
-                    Margin="20, 0, 20, 20"/>
-        </Grid>
+                    Command="{Binding EndTestingCommand}"
+                    VerticalOptions="CenterAndExpand"/>
+            <Label Text="Гортайте для переходу між запитаннями"
+                   HorizontalOptions="CenterAndExpand"
+                   Margin="10"/>
+        </StackLayout>
     </ContentPage.Content>
     
 </ContentPage>

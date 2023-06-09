@@ -99,7 +99,10 @@ namespace Testro.ViewModels
             {
                 { typeof(int), () => result = reader.GetInt32(fieldName) },
                 { typeof(long), () => result = reader.GetInt64(fieldName) },
-                { typeof(string), () => result = reader.GetString(fieldName) }
+                { typeof(string), () => result = reader.GetString(fieldName) },
+                { typeof(byte[]), () => result = (byte[])reader[fieldName] },
+                { typeof(double), () => result = reader.GetDouble(fieldName) },
+                { typeof(float), () => result = reader.GetFloat(fieldName) }
             };
 
             if (reader.HasRows)

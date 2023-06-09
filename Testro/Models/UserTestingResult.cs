@@ -72,7 +72,7 @@ namespace Testro.Models
             Test.Questions.ForEach((x) =>
             {
                 string query = "CALL GetQuestionAnswerMark('" + User.UserId + "', '" + x.QuestionId + "');";
-                totalMark += BaseViewModel.GetFirstValue<long>(query, connection, "result") * coef;
+                totalMark += BaseViewModel.GetFirstValue<double>(query, connection, "result") * coef;
             });
 
             return (float)Math.Round(totalMark, 2);
