@@ -89,17 +89,21 @@ namespace Testro.ViewModels
 
         public void OnTimerTick()
         {
-            if (!startedClockDown)
-                return;
-
-            if (TestQuestionTime > 0 && CanSetAnswers)
+            if (TestQuestionTime > 0 && CanSetAnswers && startedClockDown)
             {
-                CanSetAnswers = TimeToEndQuestion > SECOND;
-                TimeToEndQuestion = CanSetAnswers ? TimeToEndQuestion.Subtract(SECOND) : TimeSpan.Zero;
+                CanSetAnswers = TimeToEndQuestion >= SECOND;
+
+                if(!CanSetAnswers)
+                {
+                    TestProcessViewModel.SetAnswerBlocked(QuestionIndex);
+                    TimeToEndQuestion = TimeSpan.Zero;
+                }
+                else
+                    TimeToEndQuestion = TimeToEndQuestion.Subtract(SECOND);
+
             }
 
-            TimeSpan timeLeft = TestProcessViewModel.TestEndTime - DateTime.Now;
-            TimeToEndTest = new TimeSpan(timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+            TimeToEndTest = TestProcessViewModel.GetTimeToEndTest();
         }
     }
 }

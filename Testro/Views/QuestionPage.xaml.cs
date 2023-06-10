@@ -18,12 +18,13 @@ namespace Testro.Views
             if (testViewModel.Test.TestData.TestQuestionTimeConstraint == 0)
                 TestTimeInfo.Children.RemoveAt(1);
 
+            if(testViewModel.Test.TestData.TestTimeConstraint == 0)
+                TestTimeInfo.Children.RemoveAt(0);
+
             IncidentImageData.IsVisible = (BindingContext as QuestionViewModel).HasImage;
 
-            if ((BindingContext as QuestionViewModel).HasImage)
+            if (IncidentImageData.IsVisible)
                 IncidentImageData.Source = ImageSource.FromFile((BindingContext as QuestionViewModel).Question.QuestionImagePath);
-            else
-                IncidentImageData.IsVisible = false;
         }
 
         public void Handle_ItemTapped(object sender, EventArgs e)
@@ -43,6 +44,11 @@ namespace Testro.Views
             base.OnAppearing();
 
             (BindingContext as QuestionViewModel).OnPageAppearing();
+        }
+
+        public void OnImageTapped(object sender, EventArgs args)
+        {
+            IncidentImageData.Aspect = IncidentImageData.Aspect == Aspect.AspectFit ? Aspect.AspectFill : Aspect.AspectFit;
         }
     }
 }

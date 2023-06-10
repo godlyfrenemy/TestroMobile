@@ -22,10 +22,16 @@ namespace Testro.ViewModels
         public DateTime TestEndTime { get; set; }
 
         bool ForceEndTesting = false;
+        bool UserEndedTest = false;
 
         public void AddUserAnswer(int questionIndex, UserAnswer userAnswer)
         {
             UserAnswers[questionIndex] = userAnswer;
+        }
+
+        public void SetAnswerBlocked(int questionIndex)
+        {
+            UserAnswers[questionIndex].IsBlocked = true;
         }
 
         protected bool? WriteTestingResults(MySqlConnection connection)
@@ -78,13 +84,19 @@ namespace Testro.ViewModels
             WriteResults(ForceEndTesting);
             App.IsOnTestingProcess = false;
 
+            Test.Questions.ForEach(x =>
+            {
+                if (File.Exists(x.QuestionImagePath))
+                    File.Delete(x.QuestionImagePath);
+            });
+
             PopModalAsync();
             PushModalAsync(new TestResultsPage(Test.TestId));
         }
 
         private bool OnTimerTick()
         {
-            if (DateTime.Now > TestEndTime || ForceEndTesting)
+            if (IsTestTimeEnded() || ForceEndTesting || UserEndedTest)
             {
                 EndTesting();
                 return false;
@@ -108,14 +120,25 @@ namespace Testro.ViewModels
             if (!ForceEndTesting)
             {
                 bool hasEmpty = false;
+
                 UserAnswers.ForEach(x =>
                 {
-                    hasEmpty |= x.AnswerId == Answer.UNKNOWN_ID;
+                    hasEmpty |= x.IsEmpty();
                 });
 
-                if (!hasEmpty || (hasEmpty && await DisplayConfirmAlert("У вас є пусті відповіді", "Продовжити?")))
-                    TestEndTime = DateTime.Now;
+                UserEndedTest = !hasEmpty || (hasEmpty && await DisplayConfirmAlert("У вас є пусті відповіді", "Продовжити?"));
             }
+        }
+
+        public bool IsTestTimeEnded()
+        {
+            return Test.TestData.TestTimeConstraint != 0 && DateTime.Now > TestEndTime;
+        }
+
+        public TimeSpan GetTimeToEndTest()
+        {
+            TimeSpan timeLeft =  Test.TestData.TestTimeConstraint != 0 ? TestEndTime - DateTime.Now : new TimeSpan(0, 0, 0);
+            return new TimeSpan(timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
         }
     }
 }

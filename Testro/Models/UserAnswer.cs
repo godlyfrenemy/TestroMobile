@@ -21,5 +21,11 @@
         public long QuestionId { get; set; } = UNKNOWN_ID;
         public long AnswerId { get; set; } = UNKNOWN_ID;
         public int AnswerTime { get; set; } = 0;
+        public bool IsBlocked { get; set; } = false;
+
+        public bool IsEmpty()
+        {
+            return !IsBlocked && AnswerId != UNKNOWN_ID;
+        }
     }
 }

@@ -89,11 +89,11 @@ namespace Testro.Models
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
 
-                fileFullPath = Path.Combine(directory, Guid.NewGuid() + ".png");
+                fileFullPath = Path.Combine(directory, Guid.NewGuid().ToString());
                 using (FileStream fileStream = System.IO.File.Create(fileFullPath, (int)source.Length))
                 {
                     fileStream.Write(source, 0, source.Length);
-                }
+                }                
             }
 
             return fileFullPath;

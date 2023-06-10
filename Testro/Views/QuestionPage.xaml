@@ -77,11 +77,16 @@
 
                     <Image x:Name="IncidentImageData"
                            BackgroundColor="DarkGray" 
-                           Aspect="AspectFill" 
-                           WidthRequest="50" 
-                           HeightRequest="175"
+                           Aspect="AspectFit"
+                           VerticalOptions="CenterAndExpand"
                            Grid.Row="1"
-                           Source="{Binding Question.QuestionImageResource}"/>
+                           >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="OnImageTapped"
+                                NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
 
                     <Label Text="Варіанти відповіді"
                            FontSize="Large"

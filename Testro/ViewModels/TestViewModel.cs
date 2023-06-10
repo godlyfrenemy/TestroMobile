@@ -65,13 +65,14 @@ namespace Testro.ViewModels
 
         private bool HasUserAccessToTestMistakesCorrection(MySqlConnection connection)
         {
-            if (Test.Questions.Count == 0)
+            bool hasTestCorrectionAccess = GetFirstValue<bool>("CALL GetTestData('" + Test.TestId + "');", connection, "test_mistakes_correction");
+            if (Test.Questions.Count == 0 || !hasTestCorrectionAccess)
                 return false;
 
             string hasUserCompletedTestOnceQuery = "SELECT * FROM `pupil_test_completions` WHERE `pupil_id` = '" + User.UserId + "' " +
                                                     "AND `test_id` = '" + Test.TestId + "' AND `completion_times` = '1'";
             string hasUserIncorrectAnswers = "CALL GetTestQuestionsWithMistakes('" + Test.TestId + "', '" + User.UserId + "');";
-            return GetHasRows(hasUserCompletedTestOnceQuery, connection) && GetHasRows(hasUserIncorrectAnswers, connection);
+            return hasTestCorrectionAccess && GetHasRows(hasUserCompletedTestOnceQuery, connection) && GetHasRows(hasUserIncorrectAnswers, connection);
 
         }
     }

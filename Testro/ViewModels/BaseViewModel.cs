@@ -97,6 +97,7 @@ namespace Testro.ViewModels
 
             Dictionary<Type, Action> typeSwitch = new Dictionary<Type, Action>
             {
+                { typeof(bool), () => result = reader.GetBoolean(fieldName) },
                 { typeof(int), () => result = reader.GetInt32(fieldName) },
                 { typeof(long), () => result = reader.GetInt64(fieldName) },
                 { typeof(string), () => result = reader.GetString(fieldName) },

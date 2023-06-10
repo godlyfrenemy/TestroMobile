@@ -31,6 +31,7 @@ namespace Testro
 
         protected override void OnSleep()
         {
+            EndTesting();
         }
 
         protected override void OnResume()
