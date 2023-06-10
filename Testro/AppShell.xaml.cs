@@ -1,4 +1,5 @@
-﻿using Testro.Views;
+﻿using System.Linq;
+using Testro.Views;
 using Xamarin.Forms;
 
 namespace Testro

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Testro.Models;
 using Testro.ViewModels;
 using Xamarin.Forms;
@@ -34,6 +35,12 @@ namespace Testro.Views
         {
             if (App.IsOnTestingProcess)
                 viewModel.SetEndTest(true);
+        }
+
+        protected override void OnDisappearing()
+        {
+            ForceEndTesting();
+            base.OnDisappearing();
         }
     }
 }

@@ -35,6 +35,11 @@ namespace Testro
 
         protected override void OnResume()
         {
+            EndTesting();
+        }
+
+        public void EndTesting()
+        {
             if (IsOnTestingProcess)
             {
                 int index = Current.MainPage.Navigation.ModalStack.Count - 1;
