@@ -1,7 +1,11 @@
 ﻿using MySqlConnector;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Data.Common;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,6 +15,38 @@ using Xamarin.Forms;
 
 namespace Testro.ViewModels
 {
+
+    class ConnectionData
+    {
+        public ConnectionData(string server, string user, string password, int port)
+        {
+            var authenticationMethods = new List<AuthenticationMethod>
+            {
+                new PasswordAuthenticationMethod(user, password)
+            };
+
+            SshClient = new SshClient(new ConnectionInfo(server, port, user, authenticationMethods.ToArray()));
+            SshClient.Connect();
+
+            ForwardedPort = new ForwardedPortLocal("127.0.0.1", "localhost", 3306);
+            SshClient.AddForwardedPort(ForwardedPort);
+            ForwardedPort.Start();
+
+            StringBuilder = new MySqlConnectionStringBuilder
+            {
+                Server = "127.0.0.1",
+                Port = ForwardedPort.BoundPort,
+                UserID = "tesstroco_user",
+                Password = "nRpGZMduZh}5",
+                Database = "tesstroco_db"
+            };
+        }
+
+        public SshClient SshClient;
+        public ForwardedPortLocal ForwardedPort;
+        public MySqlConnectionStringBuilder StringBuilder;
+    };
+
     public class BaseViewModel : INotifyPropertyChanged
     {
         bool isBusy = false;
@@ -31,14 +67,14 @@ namespace Testro.ViewModels
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                Shell.Current.DisplayAlert("Помилка!", title, "Окей");
+                Xamarin.Forms.Shell.Current.DisplayAlert("Помилка!", title, "Окей");
             });
         }
         public static void DisplaySuccessAlert(string title)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                Shell.Current.DisplayAlert("Успішно!", title, "Окей");
+                Xamarin.Forms.Shell.Current.DisplayAlert("Успішно!", title, "Окей");
             });
         }
 
@@ -54,7 +90,7 @@ namespace Testro.ViewModels
 
         public static Task<bool> DisplayConfirmAlert(string title, string message, string accept = "Так", string cancel = "Ні")
         {
-            return Shell.Current.DisplayAlert(title, message, accept, cancel);
+            return Xamarin.Forms.Shell.Current.DisplayAlert(title, message, accept, cancel);
         }
 
         public static T GetDataBaseRequestResult<T>(Func<MySqlConnection, T> function)
@@ -168,22 +204,17 @@ namespace Testro.ViewModels
             return Convert.ToBase64String(hash);
         }
 
-        static readonly MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
-        {
-            Server = "10.0.2.2",
-            Port = 3306,
-            UserID = "root",
-            Password = "",
-            Database = "testro_db"
-        };
+        private static readonly ConnectionData _connectionData = new ConnectionData("45.94.156.6", "tesstroco", "uYaB95e8w1", 21098);
+        private static readonly MySqlConnection _connection = new MySqlConnection(_connectionData.StringBuilder.ConnectionString);
 
-        static public MySqlConnection DataBaseConnectionInstance
+        public static MySqlConnection DataBaseConnectionInstance
         {
             get
             {
-                MySqlConnection _databaseConnection = new MySqlConnection(builder.ConnectionString);
-                _databaseConnection.Open();
-                return _databaseConnection;
+                if(_connection.State != ConnectionState.Open)
+                    _connection.Open();
+
+                return _connection;
             }
         }
 
