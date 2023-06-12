@@ -18,53 +18,44 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <StackLayout Padding="10,0,10,0" VerticalOptions="Center" Grid.Row="0">
-                <Label  FontSize="Title" 
-                        Text="Привіт!" 
-                        HorizontalTextAlignment="Center"/>
-                <Label  FontSize="Title" 
-                        Text="Для продовження роботи, будь ласка, увійдіть" 
-                        HorizontalTextAlignment="Center"/>
+
+            <StackLayout Padding="10,0" VerticalOptions="Center" Grid.Row="0">
+                <Label  Text="Привіт!"/>
+                <Label  Text="Для продовження роботи, будь ласка, увійдіть"/>
             </StackLayout>
-            <StackLayout Padding="10,0,10,0" Grid.Row="1">
+            <StackLayout Padding="10,0" Grid.Row="1">
                 <Entry  Text="{ Binding UserLogin }"
-                        FontSize="Large"
-                        HorizontalTextAlignment="Center"
-                        Placeholder="Введіть ваш логін"/>
+                        Placeholder="Введіть ваш логін"
+                        VerticalOptions="Start"/>
                 <Entry  Text="{ Binding UserPassword }"
-                        FontSize="Large"
-                        HorizontalTextAlignment="Center"
                         Placeholder="Введіть ваш пароль"
-                        IsPassword="True"/>
-                <Button Margin="0, 30, 0, 0" 
-                        VerticalOptions="Center" 
-                        Text="Увійти"
-                        FontSize="Medium"
+                        IsPassword="True"
+                        VerticalOptions="Start"/>
+                <Button Text="Увійти"
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding LoginButtonEnabled}"
-                        CornerRadius="20"/>
-                <Grid Margin="0, 30, 0, 0">
+                        VerticalOptions="Start"
+                        Margin="0, 30"/>
+                <Grid VerticalOptions="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label  Text="Ви тут вперше?"
-                            FontSize="16"
+                            FontSize="Small"
                             Grid.Column="0"
                             HorizontalTextAlignment="End"/>
                     <Label  TextColor="Blue"
-                            FontSize="16"
+                            FontSize="Small"
                             Text="Зареєструватися"
                             TextDecorations="Underline"
                             Grid.Column="1"
                             HorizontalTextAlignment="Start">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SignUpCommand}" />
-                            </Label.GestureRecognizers>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+                        </Label.GestureRecognizers>
                     </Label>
                 </Grid>
-                
             </StackLayout>
         </Grid>
     </ContentPage.Content>

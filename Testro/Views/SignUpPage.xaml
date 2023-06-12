@@ -20,12 +20,8 @@
             </Grid.RowDefinitions>
             
             <StackLayout Padding="10,0,10,0" VerticalOptions="Center" Grid.Row="0">
-                <Label  FontSize="Title" 
-                        Text="Привіт!" 
-                        HorizontalTextAlignment="Center"/>
-                <Label  FontSize="Title" 
-                        Text="Нам необхідно трішки інформації про Вас" 
-                        HorizontalTextAlignment="Center"/>
+                <Label  Text="Привіт!" />
+                <Label  Text="Нам необхідно трішки інформації про Вас"/>
             </StackLayout>
             <StackLayout Padding="10,0,10,0" Grid.Row="1">
                 <Entry  Text="{ Binding UserName }"
@@ -37,12 +33,9 @@
                 <Entry  Text="{ Binding UserPassword }"
                         Placeholder="Введіть Ваш пароль" 
                         IsPassword="True"/>
-                <Button Margin="0, 30, 0, 0"
-                        VerticalOptions="Center" 
-                        Text="Зареєструватися"
+                <Button Text="Зареєструватися"
                         Command="{Binding SignUpCommand}"
-                        IsEnabled="{Binding SignUpButtonEnabled}"
-                        CornerRadius="20"/>
+                        IsEnabled="{Binding SignUpButtonEnabled}"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

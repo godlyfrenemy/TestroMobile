@@ -1,4 +1,6 @@
-﻿using Testro.ViewModels;
+﻿using System.IO;
+using Testro.Models;
+using Testro.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,6 +19,15 @@ namespace Testro.Views
         {
             base.OnAppearing();
             (BindingContext as TestProcessViewModel).OnAppearing();
+        }
+
+        ~TestPage()
+        {
+            (BindingContext as TestProcessViewModel).Test.Questions.ForEach(x =>
+            {
+                if (File.Exists(x.QuestionImagePath))
+                    File.Delete(x.QuestionImagePath);
+            });
         }
 
     }

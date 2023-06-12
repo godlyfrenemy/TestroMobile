@@ -7,107 +7,89 @@
     <ContentPage.Content>
         <StackLayout>
             <Label  Text="{Binding Test.TestName }"
-                    FontSize="Large"
-                    VerticalOptions="Start" 
-                    HorizontalOptions="CenterAndExpand" 
-                    Margin="20, 20, 20, 20"/>
+                    FontSize="Title"/>
             <BoxView HeightRequest="1" 
                      Color="LightGray"
                      IsVisible="True"/>
-            <Grid Margin="20, 20, 20, 20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label  Text="Тип тесту"
-                        FontSize="16"
-                        Grid.Column="0"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"/>
-                <Label  Text="{Binding Test.TestData.TestTypeName }"
-                        FontSize="Large"                       
-                        Grid.Column="1"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                </Label>
-            </Grid>
-            <BoxView HeightRequest="1" 
+            <ScrollView VerticalOptions="FillAndExpand">
+                <StackLayout>
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Text="Тип тесту"
+                        Grid.Column="0"/>
+                        <Label  Text="{Binding Test.TestData.TestTypeName }"                     
+                        Grid.Column="1">
+                        </Label>
+                    </Grid>
+                    <BoxView HeightRequest="1" 
                      Color="LightGray"
                      IsVisible="True"/>
-            <Grid Margin="20, 20, 20, 20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label  Text="Часові обмеження тесту (хвилини)"
-                        FontSize="16"
-                        Grid.Column="0"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"/>
-                <Label  Text="{ Binding Test.TestData.TestTimeConstraint }"
-                        FontSize="Large"                       
-                        Grid.Column="1"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                </Label>
-            </Grid>
-            <BoxView HeightRequest="1" 
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Text="Часові обмеження тесту (хвилини)"
+                        Grid.Column="0"/>
+                        <Label  Text="{ Binding Test.TestData.TestTimeConstraint }"                       
+                        Grid.Column="1">
+                        </Label>
+                    </Grid>
+                    <BoxView HeightRequest="1" 
                      Color="LightGray"
                      IsVisible="True"/>
-            <Grid Margin="20, 20, 20, 20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label  Text="Часові обмеження кожного запитання (секунди)"
-                        FontSize="16"
-                        Grid.Column="0"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"/>
-                <Label  Text="{Binding Test.TestData.TestQuestionTimeConstraint }"
-                        FontSize="Large"                       
-                        Grid.Column="1"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                </Label>
-            </Grid>
-            <BoxView HeightRequest="1" 
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Text="Часові обмеження кожного запитання (секунди)"
+                        Grid.Column="0"/>
+                        <Label  Text="{Binding Test.TestData.TestQuestionTimeConstraint }"                     
+                        Grid.Column="1">
+                        </Label>
+                    </Grid>
+                    <BoxView HeightRequest="1" 
                      Color="LightGray"
                      IsVisible="True"/>
-            <Grid Margin="20, 20, 20, 20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label  Text="Кількість запитань"
-                        FontSize="16"
-                        Grid.Column="0"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"/>
-                <Label  Text="{Binding Test.Questions.Count }"
-                        FontSize="Large"                       
-                        Grid.Column="1"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center">
-                </Label>
-            </Grid>
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Text="Кількість запитань"
+                        Grid.Column="0"/>
+                        <Label  Text="{Binding Test.Questions.Count }"                     
+                        Grid.Column="1"/>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            
             <BoxView HeightRequest="1" 
                      Color="LightGray"
                      IsVisible="True"/>
             <Button Text="Розпочати тестування"
-                    CornerRadius="20"
                     Command="{Binding StartTestCommand}"
-                    VerticalOptions="EndAndExpand"
-                    Margin="20, 20, 20, 0"
                     IsEnabled="{Binding StartTestButtonEnabled} "/>
             <Button Text="Розпочати роботу над помилками"
-                    CornerRadius="20"
                     Command="{Binding StartTestMistakesCorrectionCommand}"
-                    VerticalOptions="EndAndExpand"
-                    Margin="20, 0, 20, 20"
                     IsEnabled="{Binding StartTestMistakesCorrectionButtonEnabled} "/>
-                    
-
+                   
 
         </StackLayout>
     </ContentPage.Content>

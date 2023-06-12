@@ -1,4 +1,5 @@
-﻿using Testro.ViewModels;
+﻿using System.Net.NetworkInformation;
+using Testro.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,7 +27,6 @@ namespace Testro.Views
         }
         protected override void OnDisappearing()
         {
-            MainPageViewModel.ActiveTest = "1234";
             zxing.IsScanning = false;
             base.OnDisappearing();
         }

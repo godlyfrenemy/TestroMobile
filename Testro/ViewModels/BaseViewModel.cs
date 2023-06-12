@@ -96,17 +96,8 @@ namespace Testro.ViewModels
         public static T GetDataBaseRequestResult<T>(Func<MySqlConnection, T> function)
         {
             MySqlConnection connection = DataBaseConnectionInstance;
-
             T result = default;
-            try
-            {
-                result = function.Invoke(connection);
-            }
-            catch (Exception e)
-            {
-                DisplayErrorAlert(e.Message);
-            }
-
+            try { result = function.Invoke(connection); } catch {}
             return result;
         }
 

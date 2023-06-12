@@ -25,7 +25,7 @@
 
         public bool IsEmpty()
         {
-            return !IsBlocked && AnswerId != UNKNOWN_ID;
+            return !IsBlocked && AnswerId == UNKNOWN_ID;
         }
     }
 }

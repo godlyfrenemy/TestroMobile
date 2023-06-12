@@ -6,9 +6,7 @@
     <ScrollView>
         <StackLayout Margin="20">
             <Label Text="Ви ще не проходили жодних тестів"
-               FontSize="Large"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="CenterAndExpand"
+               FontSize="Title"
                IsVisible="{Binding NoUserPassedTests}"/>
 
             <StackLayout IsVisible="{Binding HasUserPassedTests}"
@@ -23,17 +21,15 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Text="Назва"
-                       FontSize="20"
                        FontAttributes="Bold"
+                           FontSize="Medium"
                        Grid.Column="0"                        
-                       Grid.Row="0"
-                       HorizontalTextAlignment="Center"/>
+                       Grid.Row="0"/>
                     <Label Text="Результати"
-                       FontSize="20"
                        FontAttributes="Bold"
+                           FontSize="Medium"
                        Grid.Column="1"
-                       Grid.Row="0"
-                       HorizontalTextAlignment="Center"/>
+                       Grid.Row="0"/>
                 </Grid>
 
                 <BoxView HeightRequest="2" 
@@ -53,28 +49,21 @@
                                         
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="3*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
                                         <Label Text="{Binding Test.TestName }"
-                                               FontSize="20"
-                                               Grid.Column="0"
-                                               VerticalTextAlignment="Center"
-                                               VerticalOptions="CenterAndExpand"/>
+                                               FontSize="Medium"
+                                               Grid.Column="0"/>
                                         <Label Text="{Binding CorrectAnswersToTotal }"
-                                               FontSize="20"
-                                               Grid.Column="1"
-                                               HorizontalTextAlignment="Center"
-                                               VerticalTextAlignment="Center"/>
+                                               FontSize="Medium"
+                                               Grid.Column="1"/>
                                         <Label Text="{Binding TotalMark }"
-                                               FontSize="20"
-                                               Grid.Column="2"
-                                               HorizontalTextAlignment="Center"
-                                               VerticalTextAlignment="Center"/>
+                                               FontSize="Medium"
+                                               Grid.Column="2"/>
                                     </Grid>
 
                                     <BoxView HeightRequest="1"

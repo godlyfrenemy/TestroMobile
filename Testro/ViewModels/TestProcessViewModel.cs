@@ -83,13 +83,6 @@ namespace Testro.ViewModels
         {
             WriteResults(ForceEndTesting);
             App.IsOnTestingProcess = false;
-
-            Test.Questions.ForEach(x =>
-            {
-                if (File.Exists(x.QuestionImagePath))
-                    File.Delete(x.QuestionImagePath);
-            });
-
             PopModalAsync();
             PushModalAsync(new TestResultsPage(Test.TestId));
         }

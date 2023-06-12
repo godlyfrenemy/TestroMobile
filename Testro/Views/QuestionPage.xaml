@@ -5,10 +5,7 @@
 
     <ContentPage.Content>
         <StackLayout VerticalOptions="Fill">
-            <Label Text="{Binding Title }"
-                   FontSize="Large"
-                   HorizontalOptions="CenterAndExpand"
-                   Margin="10"/>
+            <Label Text="{Binding Title }"/>
             
             <Grid BackgroundColor="Black"
                   Margin="0, 0, 0, 10"
@@ -26,16 +23,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label  Text="Час на тестування"
-                            FontSize="16"
-                            Grid.Column="0"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center"
-                            VerticalOptions="CenterAndExpand"/>
+                            Grid.Column="0"/>
                     <Label  Text="{Binding TimeToEndTest }"
-                            FontSize="Large" 
-                            Grid.Column="1"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center">
+                            Grid.Column="1">
                     </Label>
                 </Grid>
                 <Grid BackgroundColor="AliceBlue"
@@ -45,15 +35,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label  Text="Час на запитання"
-                            FontSize="16"
-                            Grid.Column="0"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center"/>
+                            Grid.Column="0"/>
                     <Label  Text="{Binding TimeToEndQuestion }"
-                            FontSize="Large" 
                             Grid.Column="1"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center"
                             TextColor="{Binding QuestionTimeColor}">
                     </Label>
                 </Grid>
@@ -70,10 +54,8 @@
                     </Grid.RowDefinitions>
                     
                     <Label Text="{Binding Question.QuestionName }"
-                           FontSize="Large"
-                           HorizontalOptions="Center"
-                           Margin="20"
-                           Grid.Row="0"/>
+                           Grid.Row="0"
+                           FontSize="Title"/>
 
                     <Image x:Name="IncidentImageData"
                            BackgroundColor="DarkGray" 
@@ -89,9 +71,8 @@
                     </Image>
 
                     <Label Text="Варіанти відповіді"
+                           Margin="15"
                            FontSize="Large"
-                           HorizontalOptions="Center"
-                           Margin="20"
                            Grid.Row="2"/>
 
                     <ListView x:Name="AnswersListView"
@@ -107,12 +88,7 @@
                             <DataTemplate>
                                 <ViewCell Tapped="Handle_ItemTapped">
                                     <StackLayout>
-                                        <Label Text="{ Binding AnswerText }" 
-                                            FontSize="Large" 
-                                            Padding="10, 10, 10, 10" 
-                                            VerticalTextAlignment="Center"
-                                            VerticalOptions="CenterAndExpand"
-                                            />
+                                        <Label Text="{ Binding AnswerText }"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
@@ -122,11 +98,9 @@
                 </Grid>
             </ScrollView>
             <Button Text="Завершити тестування"
-                    CornerRadius="20"
-                    Command="{Binding EndTestingCommand}"
-                    VerticalOptions="CenterAndExpand"/>
+                    Command="{Binding EndTestingCommand}"/>
             <Label Text="Гортайте для переходу між запитаннями"
-                   HorizontalOptions="CenterAndExpand"
+                   FontSize="Small"
                    Margin="10"/>
         </StackLayout>
     </ContentPage.Content>

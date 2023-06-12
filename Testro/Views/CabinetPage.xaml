@@ -14,33 +14,33 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout Padding="10,20,10,20">
-            <StackLayout Margin="10, 10, 10, 10" >
+        <StackLayout Margin="10">
+            <StackLayout>
                 <Label  Text="Ім'я учня"
-                    FontSize="Large"/>
+                        HorizontalTextAlignment="Start"/>
                 <Entry  Text="{ Binding UserName.PropertyValue }"
-                    FontSize="Large"
-                    Placeholder="Введіть ім'я"
-                    Unfocused="UserName_Unfocused"
-                    Focused="UserName_Focused"/>
+                        Placeholder="Введіть ім'я"
+                        Unfocused="UserName_Unfocused"
+                        Focused="UserName_Focused"
+                        HorizontalTextAlignment="Start"/>
             </StackLayout>
-            <StackLayout Margin="10, 10, 10, 10" >
+            <StackLayout>
                 <Label  Text="Прізвище учня"
-                    FontSize="Large"/>
+                        HorizontalTextAlignment="Start"/>
                 <Entry  Text="{ Binding UserSurname.PropertyValue }"
-                    FontSize="Large"
-                    Placeholder="Введіть прізвище"
-                    Unfocused="UserSurname_Unfocused"
-                    Focused="UserSurname_Focused"/>
+                        Placeholder="Введіть прізвище"
+                        Unfocused="UserSurname_Unfocused"
+                        Focused="UserSurname_Focused"
+                        HorizontalTextAlignment="Start"/>
             </StackLayout>
-            <StackLayout Margin="10, 10, 10, 10" >
+            <StackLayout>
                 <Label  Text="Клас учня"
-                    FontSize="Large"/>
+                        HorizontalTextAlignment="Start"/>
                 <Entry  Text="{ Binding UserForm.PropertyValue }"
-                    FontSize="Large"
-                    Placeholder="Введіть клас"
-                    Unfocused="UserForm_Unfocused"
-                    Focused="UserForm_Focused"/>
+                        Placeholder="Введіть клас"
+                        Unfocused="UserForm_Unfocused"
+                        Focused="UserForm_Focused"
+                        HorizontalTextAlignment="Start"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

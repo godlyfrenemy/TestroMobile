@@ -20,28 +20,23 @@
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center" Spacing="10">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Entry  Text="{ Binding ActiveTest }"
-                        Placeholder="№ тесту" 
-                        FontSize="Title"
+                        Placeholder="№ тесту"
                         Grid.Column="0"/>
-                <Button VerticalOptions="Center" 
-                        Margin="0,10,0,0"
-                        Text="Сканувати QR код"                        
+                <Button Text="QR код"                        
                         Command="{Binding ScanQRCodeCommand}"
-                        BackgroundColor="{StaticResource Primary}"
-                        TextColor="White"
+                        CornerRadius="0"
                         Grid.Column="1"/>
             </Grid>
             <Button VerticalOptions="Center" 
-                    Margin="0,10,0,0" 
                     Text="Перейти до тесту"                        
                     Command="{Binding GoToTestCommand}"
                     IsEnabled="{Binding GoToTestButtonEnabled}"
                     BackgroundColor="Green"
-                    TextColor="White" />
+                    CornerRadius="0"/>
         </StackLayout>
     </ContentPage.Content>
 
